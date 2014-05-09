@@ -24,6 +24,11 @@
 		9646419C191A7E5F0008A0CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464177191A7E5F0008A0CA /* UIKit.framework */; };
 		964641A4191A7E5F0008A0CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 964641A2191A7E5F0008A0CA /* InfoPlist.strings */; };
 		964641A6191A7E5F0008A0CA /* MGDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 964641A5191A7E5F0008A0CA /* MGDTests.m */; };
+		9699ACF3191C5C5700E199B4 /* liquidWater.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF2191C5C5700E199B4 /* liquidWater.png */; };
+		9699ACF5191C5E3000E199B4 /* snailWalk1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF4191C5E3000E199B4 /* snailWalk1.png */; };
+		9699ACF7191C68B900E199B4 /* frog.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF6191C68B900E199B4 /* frog.png */; };
+		9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFD191C7F9F00E199B4 /* frogJump.wav */; };
+		9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFE191C7F9F00E199B4 /* waterSplash.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +65,11 @@
 		964641A1191A7E5F0008A0CA /* MGDTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MGDTests-Info.plist"; sourceTree = "<group>"; };
 		964641A3191A7E5F0008A0CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		964641A5191A7E5F0008A0CA /* MGDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGDTests.m; sourceTree = "<group>"; };
+		9699ACF2191C5C5700E199B4 /* liquidWater.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liquidWater.png; sourceTree = "<group>"; };
+		9699ACF4191C5E3000E199B4 /* snailWalk1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snailWalk1.png; sourceTree = "<group>"; };
+		9699ACF6191C68B900E199B4 /* frog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.png; sourceTree = "<group>"; };
+		9699ACFD191C7F9F00E199B4 /* frogJump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogJump.wav; sourceTree = "<group>"; };
+		9699ACFE191C7F9F00E199B4 /* waterSplash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterSplash.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +131,8 @@
 		9646417B191A7E5F0008A0CA /* MGD */ = {
 			isa = PBXGroup;
 			children = (
+				9699ACF8191C6A6000E199B4 /* Audio */,
+				9699ACF1191C5C1C00E199B4 /* Images */,
 				96464184191A7E5F0008A0CA /* AppDelegate.h */,
 				96464185191A7E5F0008A0CA /* AppDelegate.m */,
 				96464187191A7E5F0008A0CA /* Main.storyboard */,
@@ -162,6 +174,25 @@
 				964641A2191A7E5F0008A0CA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9699ACF1191C5C1C00E199B4 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9699ACF6191C68B900E199B4 /* frog.png */,
+				9699ACF4191C5E3000E199B4 /* snailWalk1.png */,
+				9699ACF2191C5C5700E199B4 /* liquidWater.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		9699ACF8191C6A6000E199B4 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				9699ACFD191C7F9F00E199B4 /* frogJump.wav */,
+				9699ACFE191C7F9F00E199B4 /* waterSplash.wav */,
+			);
+			name = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,8 +271,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9699ACF5191C5E3000E199B4 /* snailWalk1.png in Resources */,
+				9699ACF7191C68B900E199B4 /* frog.png in Resources */,
+				9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */,
+				9699ACF3191C5C5700E199B4 /* liquidWater.png in Resources */,
 				96464180191A7E5F0008A0CA /* InfoPlist.strings in Resources */,
 				96464193191A7E5F0008A0CA /* Images.xcassets in Resources */,
+				9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */,
 				96464191191A7E5F0008A0CA /* Spaceship.png in Resources */,
 				96464189191A7E5F0008A0CA /* Main.storyboard in Resources */,
 			);
@@ -474,6 +510,7 @@
 				964641AB191A7E5F0008A0CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		964641AC191A7E5F0008A0CA /* Build configuration list for PBXNativeTarget "MGDTests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +519,7 @@
 				964641AE191A7E5F0008A0CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

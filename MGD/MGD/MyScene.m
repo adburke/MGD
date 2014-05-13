@@ -7,33 +7,20 @@
 //
 
 #import "MyScene.h"
+#import "SKTUtils.h"
 @import AVFoundation;
 
-// Movement Speed - Points Per Second
-static const float FROG_MPPS = 240.0;
+// Side of frog selected
+typedef NS_ENUM(NSInteger, Side)
+{
+    SideRight = 0,
+    SideLeft = 2,
+    SideTop = 1,
+    SideBottom = 3,
+};
 
-// Calculation helper methods from tutorial
-static inline CGPoint CGPointAdd(const CGPoint a,const CGPoint b)
-{
-    return CGPointMake(a.x + b.x, a.y + b.y);
-}
-static inline CGPoint CGPointSubtract(const CGPoint a,const CGPoint b)
-{
-    return CGPointMake(a.x - b.x, a.y - b.y);
-}
-static inline CGFloat CGPointLength(const CGPoint a)
-{
-    return sqrtf(a.x * a.x + a.y * a.y);
-}
-static inline CGPoint CGPointNormalize(const CGPoint a)
-{
-    CGFloat length = CGPointLength(a);
-    return CGPointMake(a.x / length, a.y / length);
-}
-static inline CGPoint CGPointMultiplyScalar(const CGPoint a,const CGFloat b)
-{
-    return CGPointMake(a.x * b, a.y * b);
-}
+// Movement Speed - Points Per Second
+static const float FROG_MOVE_DISTANCE = 50.0;
 
 @implementation MyScene
 {
@@ -44,11 +31,6 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a,const CGFloat b)
     SKAction *_frogSound;
     SKAction *_waterSound;
     
-    
-    NSTimeInterval _lastUpdateTime;
-    NSTimeInterval _dt;
-    CGPoint _lastTouchLocation;
-    CGPoint _velocity;
 }
 
 -(id)initWithSize:(CGSize)size {    
@@ -96,88 +78,69 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a,const CGFloat b)
     /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self.scene];
-    SKNode *node = [self nodeAtPoint:location];
     
-    [self moveFrogToPosition:location];
+    Side side = [self getSideSelected:location];
+    NSLog(@"Side selected = %d", side);
+    [self moveFrogInDirection:side];
     [[self scene] runAction:_frogSound];
     
-    if ([node.name isEqualToString:@"water"]) {
-        [SKAction playSoundFileNamed:@"waterSplash.wav" waitForCompletion:NO];
-    }
-    
-    if ([node.name isEqualToString:@"frog"]) {
 
-
-    }
    
     
-}
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    CGPoint touchLocation = [touch locationInNode:self.scene];
-    [self moveFrogToPosition:touchLocation];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    CGPoint touchLocation = [touch locationInNode:self.scene];
-    [self moveFrogToPosition:touchLocation];
-}
-
--(void)update:(CFTimeInterval)currentTime {
-    // Used to smooth out movement due to update times being variable
-    if (_lastUpdateTime) {
-        _dt = currentTime - _lastUpdateTime;
-    } else {
-        _dt = 0;
-    }
-    _lastUpdateTime = currentTime;
-    
-    CGPoint offset = CGPointSubtract(_lastTouchLocation, _frog.position);
-    float distance = CGPointLength(offset);
-    if (distance < FROG_MPPS * _dt) {
-        _frog.position = _lastTouchLocation;
-        _velocity = CGPointZero;
-    } else {
-        [self moveSprite:_frog velocity:_velocity];
-    }
 }
 
 - (void)didEvaluateActions {
     [self checkCollisions];
 }
 
-- (void)moveSprite:(SKSpriteNode *)sprite
-          velocity:(CGPoint)velocity
+- (Side)getSideSelected:(CGPoint)location
 {
-    CGPoint amountToMove = CGPointMultiplyScalar(velocity, _dt);
-    sprite.position = CGPointAdd(sprite.position, amountToMove);
+    CGPoint diff = CGPointSubtract(location,_frog.position);
+    CGFloat angle = CGPointToAngle(diff);
+    if (angle > -M_PI_4 && angle <= M_PI_4) {
+        return SideRight;
+    } else if (angle > M_PI_4 && angle <= 3.0f * M_PI_4) {
+        return SideTop;
+    } else if (angle <= -M_PI_4 && angle > -3.0f * M_PI_4) {
+        return SideBottom;
+    } else {
+        return SideLeft;
+    }
 }
 
--(void)moveFrogToPosition:(CGPoint)location
+-(void)moveFrogInDirection:(Side)side
 {
-    
-    _lastTouchLocation = location;
-    CGPoint offset = CGPointSubtract(location, _frog.position);
-    
-    CGPoint direction = CGPointNormalize(offset);
-    _velocity = CGPointMultiplyScalar(direction, FROG_MPPS);
+    if (side == 1) {
+        CGVector negDelta = CGVectorMake(0,FROG_MOVE_DISTANCE);
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        [_frog runAction:actionMove];
+    } else if (side == 0) {
+        CGVector negDelta = CGVectorMake(FROG_MOVE_DISTANCE,0);
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        [_frog runAction:actionMove];
+    } else if (side == 2) {
+        CGVector negDelta = CGVectorMake(-FROG_MOVE_DISTANCE,0);
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        [_frog runAction:actionMove];
+    } else if (side == 3) {
+        CGVector negDelta = CGVectorMake(0,-FROG_MOVE_DISTANCE);
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        [_frog runAction:actionMove];
+    }
 }
 
 - (void)checkCollisions
 {
     
-    [self enumerateChildNodesWithName:@"water"
-                           usingBlock:^(SKNode *node, BOOL *stop){
-                               SKSpriteNode *water = (SKSpriteNode *)node;
-                               CGRect smallerFrame = CGRectInset(water.frame, 20, 20);
-                               if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
-                                   NSLog(@"Collision detected");
-                                   [[self scene] runAction:_waterSound];
-                               }
-                           }];
+    [self enumerateChildNodesWithName:@"water" usingBlock:^(SKNode *node, BOOL *stop)
+    {
+        SKSpriteNode *water = (SKSpriteNode *)node;
+        CGRect smallerFrame = CGRectInset(water.frame, 20, 20);
+        if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+           NSLog(@"Collision detected");
+           [[self scene] runAction:_waterSound];
+        }
+    }];
 }
 
 @end

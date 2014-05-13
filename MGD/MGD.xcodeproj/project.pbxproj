@@ -42,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9635FB281921D28D008C9FF8 /* SKTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTUtils.h; sourceTree = "<group>"; };
 		96464170191A7E5F0008A0CA /* MGD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96464173191A7E5F0008A0CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96464175191A7E5F0008A0CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,6 +144,7 @@
 				96464190191A7E5F0008A0CA /* Spaceship.png */,
 				96464192191A7E5F0008A0CA /* Images.xcassets */,
 				9646417C191A7E5F0008A0CA /* Supporting Files */,
+				9635FB281921D28D008C9FF8 /* SKTUtils.h */,
 			);
 			path = MGD;
 			sourceTree = "<group>";

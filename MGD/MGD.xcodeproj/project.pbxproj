@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9635FB641922059B008C9FF8 /* frog.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB611922059B008C9FF8 /* frog.1.png */; };
+		9635FB651922059B008C9FF8 /* frog.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB621922059B008C9FF8 /* frog.1@2x.png */; };
+		9635FB661922059B008C9FF8 /* frog.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB631922059B008C9FF8 /* frog.plist */; };
 		96464174191A7E5F0008A0CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464173191A7E5F0008A0CA /* Foundation.framework */; };
 		96464176191A7E5F0008A0CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464175191A7E5F0008A0CA /* CoreGraphics.framework */; };
 		96464178191A7E5F0008A0CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464177191A7E5F0008A0CA /* UIKit.framework */; };
@@ -26,7 +29,6 @@
 		964641A6191A7E5F0008A0CA /* MGDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 964641A5191A7E5F0008A0CA /* MGDTests.m */; };
 		9699ACF3191C5C5700E199B4 /* liquidWater.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF2191C5C5700E199B4 /* liquidWater.png */; };
 		9699ACF5191C5E3000E199B4 /* snailWalk1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF4191C5E3000E199B4 /* snailWalk1.png */; };
-		9699ACF7191C68B900E199B4 /* frog.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF6191C68B900E199B4 /* frog.png */; };
 		9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFD191C7F9F00E199B4 /* frogJump.wav */; };
 		9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFE191C7F9F00E199B4 /* waterSplash.wav */; };
 /* End PBXBuildFile section */
@@ -43,6 +45,9 @@
 
 /* Begin PBXFileReference section */
 		9635FB281921D28D008C9FF8 /* SKTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTUtils.h; sourceTree = "<group>"; };
+		9635FB611922059B008C9FF8 /* frog.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.1.png; sourceTree = "<group>"; };
+		9635FB621922059B008C9FF8 /* frog.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frog.1@2x.png"; sourceTree = "<group>"; };
+		9635FB631922059B008C9FF8 /* frog.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = frog.plist; sourceTree = "<group>"; };
 		96464170191A7E5F0008A0CA /* MGD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96464173191A7E5F0008A0CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96464175191A7E5F0008A0CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -68,7 +73,6 @@
 		964641A5191A7E5F0008A0CA /* MGDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGDTests.m; sourceTree = "<group>"; };
 		9699ACF2191C5C5700E199B4 /* liquidWater.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liquidWater.png; sourceTree = "<group>"; };
 		9699ACF4191C5E3000E199B4 /* snailWalk1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snailWalk1.png; sourceTree = "<group>"; };
-		9699ACF6191C68B900E199B4 /* frog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.png; sourceTree = "<group>"; };
 		9699ACFD191C7F9F00E199B4 /* frogJump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogJump.wav; sourceTree = "<group>"; };
 		9699ACFE191C7F9F00E199B4 /* waterSplash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterSplash.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +102,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9635FB601922059B008C9FF8 /* frog.atlasc */ = {
+			isa = PBXGroup;
+			children = (
+				9635FB611922059B008C9FF8 /* frog.1.png */,
+				9635FB621922059B008C9FF8 /* frog.1@2x.png */,
+				9635FB631922059B008C9FF8 /* frog.plist */,
+			);
+			path = frog.atlasc;
+			sourceTree = "<group>";
+		};
 		96464167191A7E5F0008A0CA = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +195,7 @@
 		9699ACF1191C5C1C00E199B4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				9699ACF6191C68B900E199B4 /* frog.png */,
+				9635FB601922059B008C9FF8 /* frog.atlasc */,
 				9699ACF4191C5E3000E199B4 /* snailWalk1.png */,
 				9699ACF2191C5C5700E199B4 /* liquidWater.png */,
 			);
@@ -274,11 +288,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9699ACF5191C5E3000E199B4 /* snailWalk1.png in Resources */,
-				9699ACF7191C68B900E199B4 /* frog.png in Resources */,
+				9635FB651922059B008C9FF8 /* frog.1@2x.png in Resources */,
 				9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */,
 				9699ACF3191C5C5700E199B4 /* liquidWater.png in Resources */,
 				96464180191A7E5F0008A0CA /* InfoPlist.strings in Resources */,
+				9635FB641922059B008C9FF8 /* frog.1.png in Resources */,
 				96464193191A7E5F0008A0CA /* Images.xcassets in Resources */,
+				9635FB661922059B008C9FF8 /* frog.plist in Resources */,
 				9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */,
 				96464191191A7E5F0008A0CA /* Spaceship.png in Resources */,
 				96464189191A7E5F0008A0CA /* Main.storyboard in Resources */,

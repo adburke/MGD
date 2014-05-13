@@ -20,13 +20,18 @@ typedef NS_ENUM(NSInteger, Side)
 };
 
 // Movement Speed - Points Per Second
-static const float FROG_MOVE_DISTANCE = 50.0;
+static const float FROG_MOVE_DISTANCE = 64.0;
 
 @implementation MyScene
 {
     SKSpriteNode *_snail;
     SKSpriteNode *_frog;
     SKSpriteNode *_water;
+    
+    SKAction *_frogAnimationForward;
+    SKAction *_frogAnimationBackward;
+    SKAction *_frogAnimationRight;
+    SKAction *_frogAnimationLeft;
     
     SKAction *_frogSound;
     SKAction *_waterSound;
@@ -53,21 +58,88 @@ static const float FROG_MOVE_DISTANCE = 50.0;
         _snail.name = @"snail";
         [self addChild:_snail];
         
-        _frog = [SKSpriteNode spriteNodeWithImageNamed:@"frog"];
-        _frog.position = CGPointMake(400, 400);
-        _frog.xScale = 0.1;
-        _frog.yScale = 0.1;
+        _frog = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"frog"] textureNamed: @"Frog Forward/frog1"]];
+        _frog.position = CGPointMake(384, 32);
         _frog.name = @"frog";
         _frog.userInteractionEnabled = YES;
         _frogSound = [SKAction playSoundFileNamed:@"frogJump.wav" waitForCompletion:NO];
         [self addChild:_frog];
-        
+        NSLog(@"Frog width = %f, height = %f", _frog.size.width, _frog.size.height);
+
         _water = [SKSpriteNode spriteNodeWithImageNamed:@"liquidWater"];
         _water.position = CGPointMake(500, 300);
         _water.userInteractionEnabled = YES;
         _water.name = @"water";
         _waterSound = [SKAction playSoundFileNamed:@"waterSplash.wav" waitForCompletion:YES];
         [self addChild:_water];
+        
+        // Frog forward animation
+        NSMutableArray *texturesForward =
+        [NSMutableArray arrayWithCapacity:10];
+        for (int i = 1; i < 4; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"frog%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Forward/%@", textureName]];
+            [texturesForward addObject:texture];
+        }
+        for (int i = 2; i > 0; i--) {
+            NSString *textureName = [NSString stringWithFormat:@"frog%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Forward/%@", textureName]];
+            [texturesForward addObject:texture];
+        }
+        _frogAnimationForward = [SKAction animateWithTextures:texturesForward timePerFrame:0.05];
+        
+        // Frog reverse animation
+        NSMutableArray *texturesBackward =
+        [NSMutableArray arrayWithCapacity:10];
+        for (int i = 1; i < 4; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"frogB%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Backward/%@", textureName]];
+            [texturesBackward addObject:texture];
+        }
+        for (int i = 2; i > 0; i--) {
+            NSString *textureName = [NSString stringWithFormat:@"frogB%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Backward/%@", textureName]];
+            [texturesBackward addObject:texture];
+        }
+        _frogAnimationBackward = [SKAction animateWithTextures:texturesBackward timePerFrame:0.05];
+        
+        // Frog Right animation
+        NSMutableArray *texturesRight =
+        [NSMutableArray arrayWithCapacity:10];
+        for (int i = 1; i < 4; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"frogR%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Right/%@", textureName]];
+            [texturesRight addObject:texture];
+        }
+        for (int i = 2; i > 0; i--) {
+            NSString *textureName = [NSString stringWithFormat:@"frogR%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Right/%@", textureName]];
+            [texturesRight addObject:texture];
+        }
+        _frogAnimationRight = [SKAction animateWithTextures:texturesRight timePerFrame:0.05];
+        
+        // Frog Left animation
+        NSMutableArray *texturesLeft =
+        [NSMutableArray arrayWithCapacity:10];
+        for (int i = 1; i < 4; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"frogL%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Left/%@", textureName]];
+            [texturesLeft addObject:texture];
+        }
+        for (int i = 2; i > 0; i--) {
+            NSString *textureName = [NSString stringWithFormat:@"frogL%d", i];
+            SKTexture *texture = [[SKTextureAtlas atlasNamed:@"frog"]
+                                  textureNamed:[NSString stringWithFormat:@"Frog Left/%@", textureName]];
+            [texturesLeft addObject:texture];
+        }
+        _frogAnimationLeft = [SKAction animateWithTextures:texturesLeft timePerFrame:0.05];
         
     }
     return self;
@@ -113,19 +185,23 @@ static const float FROG_MOVE_DISTANCE = 50.0;
     if (side == 1) {
         CGVector negDelta = CGVectorMake(0,FROG_MOVE_DISTANCE);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
-        [_frog runAction:actionMove];
+        SKAction *group = [SKAction group:@[actionMove, _frogAnimationForward]];
+        [_frog runAction:group];
     } else if (side == 0) {
         CGVector negDelta = CGVectorMake(FROG_MOVE_DISTANCE,0);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
-        [_frog runAction:actionMove];
+        SKAction *group = [SKAction group:@[actionMove, _frogAnimationRight]];
+        [_frog runAction:group];
     } else if (side == 2) {
         CGVector negDelta = CGVectorMake(-FROG_MOVE_DISTANCE,0);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
-        [_frog runAction:actionMove];
+        SKAction *group = [SKAction group:@[actionMove, _frogAnimationLeft]];
+        [_frog runAction:group];
     } else if (side == 3) {
         CGVector negDelta = CGVectorMake(0,-FROG_MOVE_DISTANCE);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
-        [_frog runAction:actionMove];
+        SKAction *group = [SKAction group:@[actionMove, _frogAnimationBackward]];
+        [_frog runAction:group];
     }
 }
 

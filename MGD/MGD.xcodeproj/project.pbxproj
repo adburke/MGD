@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9611B31C1925BF4B00B71CF4 /* frogGroan.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9611B31B1925BF4B00B71CF4 /* frogGroan.wav */; };
 		9635FB641922059B008C9FF8 /* frog.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB611922059B008C9FF8 /* frog.1.png */; };
 		9635FB651922059B008C9FF8 /* frog.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB621922059B008C9FF8 /* frog.1@2x.png */; };
 		9635FB661922059B008C9FF8 /* frog.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB631922059B008C9FF8 /* frog.plist */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9611B31B1925BF4B00B71CF4 /* frogGroan.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogGroan.wav; sourceTree = "<group>"; };
 		9635FB281921D28D008C9FF8 /* SKTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTUtils.h; sourceTree = "<group>"; };
 		9635FB611922059B008C9FF8 /* frog.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.1.png; sourceTree = "<group>"; };
 		9635FB621922059B008C9FF8 /* frog.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frog.1@2x.png"; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		9699ACF8191C6A6000E199B4 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				9611B31B1925BF4B00B71CF4 /* frogGroan.wav */,
 				9699ACFD191C7F9F00E199B4 /* frogJump.wav */,
 				9699ACFE191C7F9F00E199B4 /* waterSplash.wav */,
 			);
@@ -321,6 +324,7 @@
 				96B6B43E1925AA97000B8F44 /* snailWalk1@2x.png in Resources */,
 				9635FB661922059B008C9FF8 /* frog.plist in Resources */,
 				9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */,
+				9611B31C1925BF4B00B71CF4 /* frogGroan.wav in Resources */,
 				96464189191A7E5F0008A0CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

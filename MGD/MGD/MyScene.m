@@ -281,7 +281,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
          CGRect smallerFrame = CGRectInset(snail.frame, 20, 20);
          if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
              NSLog(@"Collision detected");
-             [[self scene] runAction:_waterSound];
+             [[self scene] runAction:[SKAction playSoundFileNamed:@"frogGroan.wav" waitForCompletion:YES]];
          }
      }];
 }

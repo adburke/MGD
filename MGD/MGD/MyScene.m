@@ -10,6 +10,14 @@
 #import "SKTUtils.h"
 @import AVFoundation;
 
+#define ARC4RANDOM_MAX      0x100000000
+static inline CGFloat ScalarRandomRange(CGFloat min,
+                                        CGFloat max)
+{
+    return floorf(((double)arc4random() / ARC4RANDOM_MAX) *
+                  (max - min) + min);
+}
+
 // Side of frog selected
 typedef NS_ENUM(NSInteger, Side)
 {
@@ -24,14 +32,20 @@ static const float FROG_MOVE_DISTANCE = 64.0;
 
 @implementation MyScene
 {
-    SKSpriteNode *_snail;
     SKSpriteNode *_frog;
+    
     SKSpriteNode *_water;
+    SKSpriteNode *_dirtStart;
+    SKSpriteNode *_dirtFinish;
+    SKSpriteNode *_stone;
+    SKSpriteNode *_grass;
     
     SKAction *_frogAnimationForward;
     SKAction *_frogAnimationBackward;
     SKAction *_frogAnimationRight;
     SKAction *_frogAnimationLeft;
+    
+    SKAction *_snailAnimation;
     
     SKAction *_frogSound;
     SKAction *_waterSound;
@@ -40,38 +54,41 @@ static const float FROG_MOVE_DISTANCE = 64.0;
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
-        /* Setup your scene here */
-        
-        self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
-        
-        SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        
-        myLabel.text = @"Test Background!";
-        myLabel.fontSize = 30;
-        myLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
-        [self addChild:myLabel];
-        
-        _snail = [SKSpriteNode spriteNodeWithImageNamed:@"snailWalk1"];
-        _snail.position = CGPointMake(300, 300);
-        _snail.xScale = 1.5;
-        _snail.yScale = 1.5;
-        _snail.name = @"snail";
-        [self addChild:_snail];
         
         _frog = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"frog"] textureNamed: @"Frog Forward/frog1"]];
         _frog.position = CGPointMake(384, 32);
         _frog.name = @"frog";
+        _frog.zPosition = 300;
         _frog.userInteractionEnabled = YES;
         _frogSound = [SKAction playSoundFileNamed:@"frogJump.wav" waitForCompletion:NO];
         [self addChild:_frog];
         NSLog(@"Frog width = %f, height = %f", _frog.size.width, _frog.size.height);
 
-        _water = [SKSpriteNode spriteNodeWithImageNamed:@"liquidWater"];
-        _water.position = CGPointMake(500, 300);
-        _water.userInteractionEnabled = YES;
+        _water = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"scene"] textureNamed: @"water"]];
+        _water.position = CGPointMake(384, 767);
         _water.name = @"water";
         _waterSound = [SKAction playSoundFileNamed:@"waterSplash.wav" waitForCompletion:YES];
         [self addChild:_water];
+        
+        _dirtStart = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"scene"] textureNamed: @"dirt"]];
+        _dirtStart.position = CGPointMake(384, 33);
+        _dirtStart.name = @"start";
+        [self addChild:_dirtStart];
+        
+        _dirtFinish = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"scene"] textureNamed: @"dirt"]];
+        _dirtFinish.position = CGPointMake(384, 991);
+        _dirtFinish.name = @"finish";
+        [self addChild:_dirtFinish];
+        
+        _stone = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"scene"] textureNamed: @"stone"]];
+        _stone.position = CGPointMake(384, 545);
+        _stone.name = @"stone";
+        [self addChild:_stone];
+        
+        _grass = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"scene"] textureNamed: @"grass"]];
+        _grass.position = CGPointMake(384, 289);
+        _grass.name = @"grass";
+        [self addChild:_grass];
         
         // Frog forward animation
         NSMutableArray *texturesForward =
@@ -141,6 +158,26 @@ static const float FROG_MOVE_DISTANCE = 64.0;
         }
         _frogAnimationLeft = [SKAction animateWithTextures:texturesLeft timePerFrame:0.05];
         
+        // Snail animation
+        NSMutableArray *snailTextures =
+        [NSMutableArray arrayWithCapacity:10];
+        for (int i = 1; i < 3; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"snailWalk%d", i];
+            SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
+            [snailTextures addObject:texture];
+        }
+        for (int i = 1; i > 0; i--) {
+            NSString *textureName = [NSString stringWithFormat:@"snailWalk%d", i];
+            SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
+            [snailTextures addObject:texture];
+        }
+        _snailAnimation = [SKAction animateWithTextures:snailTextures timePerFrame:0.05];
+        
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction performSelector:@selector(spawnSnail) onTarget:self],
+                                              [SKAction waitForDuration:1.0]]]]];
+        
     }
     return self;
 }
@@ -205,6 +242,26 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     }
 }
 
+-(void)spawnSnail
+{
+    SKSpriteNode *snail = [SKSpriteNode spriteNodeWithImageNamed:@"snailWalk1"];
+//    _snail.position = CGPointMake(300, 300);
+    snail.xScale = 1.5;
+    snail.yScale = 1.5;
+    snail.zPosition = 300;
+    snail.name = @"snail";
+    
+    CGPoint snailScenePos = CGPointMake(self.size.width + snail.size.width/2,ScalarRandomRange(snail.size.width, _grass.size.height));
+    snail.position = [self convertPoint:snailScenePos toNode:self];
+    
+    [self addChild:snail];
+    
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(-snail.size.width/2,snail.position.y) duration:3.0];
+    SKAction *actionRemove = [SKAction removeFromParent];
+    SKAction *group = [SKAction group:@[actionMove, _snailAnimation]];
+    [snail runAction:[SKAction sequence:@[group, actionRemove]]];
+}
+
 - (void)checkCollisions
 {
     
@@ -217,6 +274,16 @@ static const float FROG_MOVE_DISTANCE = 64.0;
            [[self scene] runAction:_waterSound];
         }
     }];
+    
+    [self enumerateChildNodesWithName:@"snail" usingBlock:^(SKNode *node, BOOL *stop)
+     {
+         SKSpriteNode *snail = (SKSpriteNode *)node;
+         CGRect smallerFrame = CGRectInset(snail.frame, 20, 20);
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+             NSLog(@"Collision detected");
+             [[self scene] runAction:_waterSound];
+         }
+     }];
 }
 
 @end

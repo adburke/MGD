@@ -20,17 +20,21 @@
 		96464189191A7E5F0008A0CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96464187191A7E5F0008A0CA /* Main.storyboard */; };
 		9646418C191A7E5F0008A0CA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9646418B191A7E5F0008A0CA /* ViewController.m */; };
 		9646418F191A7E5F0008A0CA /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 9646418E191A7E5F0008A0CA /* MyScene.m */; };
-		96464191191A7E5F0008A0CA /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 96464190191A7E5F0008A0CA /* Spaceship.png */; };
 		96464193191A7E5F0008A0CA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96464192191A7E5F0008A0CA /* Images.xcassets */; };
 		9646419A191A7E5F0008A0CA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464199191A7E5F0008A0CA /* XCTest.framework */; };
 		9646419B191A7E5F0008A0CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464173191A7E5F0008A0CA /* Foundation.framework */; };
 		9646419C191A7E5F0008A0CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464177191A7E5F0008A0CA /* UIKit.framework */; };
 		964641A4191A7E5F0008A0CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 964641A2191A7E5F0008A0CA /* InfoPlist.strings */; };
 		964641A6191A7E5F0008A0CA /* MGDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 964641A5191A7E5F0008A0CA /* MGDTests.m */; };
-		9699ACF3191C5C5700E199B4 /* liquidWater.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF2191C5C5700E199B4 /* liquidWater.png */; };
-		9699ACF5191C5E3000E199B4 /* snailWalk1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACF4191C5E3000E199B4 /* snailWalk1.png */; };
 		9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFD191C7F9F00E199B4 /* frogJump.wav */; };
 		9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFE191C7F9F00E199B4 /* waterSplash.wav */; };
+		96B6B43619258E9D000B8F44 /* scene.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43319258E9D000B8F44 /* scene.1.png */; };
+		96B6B43719258E9D000B8F44 /* scene.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43419258E9D000B8F44 /* scene.1@2x.png */; };
+		96B6B43819258E9D000B8F44 /* scene.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43519258E9D000B8F44 /* scene.plist */; };
+		96B6B43D1925AA97000B8F44 /* snailWalk1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B4391925AA97000B8F44 /* snailWalk1.png */; };
+		96B6B43E1925AA97000B8F44 /* snailWalk1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43A1925AA97000B8F44 /* snailWalk1@2x.png */; };
+		96B6B43F1925AA97000B8F44 /* snailWalk2.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43B1925AA97000B8F44 /* snailWalk2.png */; };
+		96B6B4401925AA97000B8F44 /* snailWalk2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43C1925AA97000B8F44 /* snailWalk2@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,17 +68,21 @@
 		9646418B191A7E5F0008A0CA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9646418D191A7E5F0008A0CA /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
 		9646418E191A7E5F0008A0CA /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
-		96464190191A7E5F0008A0CA /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		96464192191A7E5F0008A0CA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96464198191A7E5F0008A0CA /* MGDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MGDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96464199191A7E5F0008A0CA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		964641A1191A7E5F0008A0CA /* MGDTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MGDTests-Info.plist"; sourceTree = "<group>"; };
 		964641A3191A7E5F0008A0CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		964641A5191A7E5F0008A0CA /* MGDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGDTests.m; sourceTree = "<group>"; };
-		9699ACF2191C5C5700E199B4 /* liquidWater.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liquidWater.png; sourceTree = "<group>"; };
-		9699ACF4191C5E3000E199B4 /* snailWalk1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snailWalk1.png; sourceTree = "<group>"; };
 		9699ACFD191C7F9F00E199B4 /* frogJump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogJump.wav; sourceTree = "<group>"; };
 		9699ACFE191C7F9F00E199B4 /* waterSplash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterSplash.wav; sourceTree = "<group>"; };
+		96B6B43319258E9D000B8F44 /* scene.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.1.png; sourceTree = "<group>"; };
+		96B6B43419258E9D000B8F44 /* scene.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scene.1@2x.png"; sourceTree = "<group>"; };
+		96B6B43519258E9D000B8F44 /* scene.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = scene.plist; sourceTree = "<group>"; };
+		96B6B4391925AA97000B8F44 /* snailWalk1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = snailWalk1.png; path = ../../../Art/snailWalk1.png; sourceTree = "<group>"; };
+		96B6B43A1925AA97000B8F44 /* snailWalk1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "snailWalk1@2x.png"; path = "../../../Art/snailWalk1@2x.png"; sourceTree = "<group>"; };
+		96B6B43B1925AA97000B8F44 /* snailWalk2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = snailWalk2.png; path = ../../../Art/snailWalk2.png; sourceTree = "<group>"; };
+		96B6B43C1925AA97000B8F44 /* snailWalk2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "snailWalk2@2x.png"; path = "../../../Art/snailWalk2@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +163,6 @@
 				9646418B191A7E5F0008A0CA /* ViewController.m */,
 				9646418D191A7E5F0008A0CA /* MyScene.h */,
 				9646418E191A7E5F0008A0CA /* MyScene.m */,
-				96464190191A7E5F0008A0CA /* Spaceship.png */,
 				96464192191A7E5F0008A0CA /* Images.xcassets */,
 				9646417C191A7E5F0008A0CA /* Supporting Files */,
 				9635FB281921D28D008C9FF8 /* SKTUtils.h */,
@@ -195,9 +202,12 @@
 		9699ACF1191C5C1C00E199B4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				96B6B4391925AA97000B8F44 /* snailWalk1.png */,
+				96B6B43A1925AA97000B8F44 /* snailWalk1@2x.png */,
+				96B6B43B1925AA97000B8F44 /* snailWalk2.png */,
+				96B6B43C1925AA97000B8F44 /* snailWalk2@2x.png */,
+				96B6B43219258E9D000B8F44 /* scene.atlasc */,
 				9635FB601922059B008C9FF8 /* frog.atlasc */,
-				9699ACF4191C5E3000E199B4 /* snailWalk1.png */,
-				9699ACF2191C5C5700E199B4 /* liquidWater.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -209,6 +219,16 @@
 				9699ACFE191C7F9F00E199B4 /* waterSplash.wav */,
 			);
 			name = Audio;
+			sourceTree = "<group>";
+		};
+		96B6B43219258E9D000B8F44 /* scene.atlasc */ = {
+			isa = PBXGroup;
+			children = (
+				96B6B43319258E9D000B8F44 /* scene.1.png */,
+				96B6B43419258E9D000B8F44 /* scene.1@2x.png */,
+				96B6B43519258E9D000B8F44 /* scene.plist */,
+			);
+			path = scene.atlasc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,16 +307,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9699ACF5191C5E3000E199B4 /* snailWalk1.png in Resources */,
+				96B6B43D1925AA97000B8F44 /* snailWalk1.png in Resources */,
 				9635FB651922059B008C9FF8 /* frog.1@2x.png in Resources */,
 				9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */,
-				9699ACF3191C5C5700E199B4 /* liquidWater.png in Resources */,
+				96B6B43719258E9D000B8F44 /* scene.1@2x.png in Resources */,
+				96B6B43819258E9D000B8F44 /* scene.plist in Resources */,
+				96B6B4401925AA97000B8F44 /* snailWalk2@2x.png in Resources */,
+				96B6B43F1925AA97000B8F44 /* snailWalk2.png in Resources */,
 				96464180191A7E5F0008A0CA /* InfoPlist.strings in Resources */,
+				96B6B43619258E9D000B8F44 /* scene.1.png in Resources */,
 				9635FB641922059B008C9FF8 /* frog.1.png in Resources */,
 				96464193191A7E5F0008A0CA /* Images.xcassets in Resources */,
+				96B6B43E1925AA97000B8F44 /* snailWalk1@2x.png in Resources */,
 				9635FB661922059B008C9FF8 /* frog.plist in Resources */,
 				9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */,
-				96464191191A7E5F0008A0CA /* Spaceship.png in Resources */,
 				96464189191A7E5F0008A0CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

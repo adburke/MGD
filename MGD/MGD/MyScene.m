@@ -397,6 +397,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
              
              _death = [SKSpriteNode spriteNodeWithImageNamed:@"death.png"];
              _death.position = CGPointMake(_frog.position.x, _frog.position.y);
+             _death.zPosition = 500;
              [_frog removeFromParent];
              [self addChild:_death];
              

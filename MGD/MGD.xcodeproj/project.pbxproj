@@ -7,10 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96062D72192D88440089E3BB /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 96062D71192D88440089E3BB /* GameOverScene.m */; };
+		96062D75192D96550089E3BB /* lose.png in Resources */ = {isa = PBXBuildFile; fileRef = 96062D73192D96550089E3BB /* lose.png */; };
+		96062D76192D96550089E3BB /* win.png in Resources */ = {isa = PBXBuildFile; fileRef = 96062D74192D96550089E3BB /* win.png */; };
+		96062D7B192D96CA0089E3BB /* snailWalk1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96062D77192D96CA0089E3BB /* snailWalk1.png */; };
+		96062D7C192D96CA0089E3BB /* snailWalk1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96062D78192D96CA0089E3BB /* snailWalk1@2x.png */; };
+		96062D7D192D96CA0089E3BB /* snailWalk2.png in Resources */ = {isa = PBXBuildFile; fileRef = 96062D79192D96CA0089E3BB /* snailWalk2.png */; };
+		96062D7E192D96CA0089E3BB /* snailWalk2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96062D7A192D96CA0089E3BB /* snailWalk2@2x.png */; };
 		9611B31C1925BF4B00B71CF4 /* frogGroan.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9611B31B1925BF4B00B71CF4 /* frogGroan.wav */; };
 		9635FB641922059B008C9FF8 /* frog.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB611922059B008C9FF8 /* frog.1.png */; };
 		9635FB651922059B008C9FF8 /* frog.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB621922059B008C9FF8 /* frog.1@2x.png */; };
 		9635FB661922059B008C9FF8 /* frog.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9635FB631922059B008C9FF8 /* frog.plist */; };
+		963C5909192EE43700D3187A /* scene-iphone.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 963C5906192EE43700D3187A /* scene-iphone.1.png */; };
+		963C590A192EE43700D3187A /* scene-iphone.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 963C5907192EE43700D3187A /* scene-iphone.1@2x.png */; };
+		963C590B192EE43700D3187A /* scene-iphone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 963C5908192EE43700D3187A /* scene-iphone.plist */; };
+		963C5917192EEB4300D3187A /* frog-iphone.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 963C5914192EEB4300D3187A /* frog-iphone.1.png */; };
+		963C5918192EEB4300D3187A /* frog-iphone.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 963C5915192EEB4300D3187A /* frog-iphone.1@2x.png */; };
+		963C5919192EEB4300D3187A /* frog-iphone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 963C5916192EEB4300D3187A /* frog-iphone.plist */; };
 		96464174191A7E5F0008A0CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464173191A7E5F0008A0CA /* Foundation.framework */; };
 		96464176191A7E5F0008A0CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464175191A7E5F0008A0CA /* CoreGraphics.framework */; };
 		96464178191A7E5F0008A0CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464177191A7E5F0008A0CA /* UIKit.framework */; };
@@ -32,10 +45,6 @@
 		96B6B43619258E9D000B8F44 /* scene.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43319258E9D000B8F44 /* scene.1.png */; };
 		96B6B43719258E9D000B8F44 /* scene.1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43419258E9D000B8F44 /* scene.1@2x.png */; };
 		96B6B43819258E9D000B8F44 /* scene.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43519258E9D000B8F44 /* scene.plist */; };
-		96B6B43D1925AA97000B8F44 /* snailWalk1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B4391925AA97000B8F44 /* snailWalk1.png */; };
-		96B6B43E1925AA97000B8F44 /* snailWalk1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43A1925AA97000B8F44 /* snailWalk1@2x.png */; };
-		96B6B43F1925AA97000B8F44 /* snailWalk2.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43B1925AA97000B8F44 /* snailWalk2.png */; };
-		96B6B4401925AA97000B8F44 /* snailWalk2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43C1925AA97000B8F44 /* snailWalk2@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,11 +58,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		96062D70192D88440089E3BB /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
+		96062D71192D88440089E3BB /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScene.m; sourceTree = "<group>"; };
+		96062D73192D96550089E3BB /* lose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lose.png; sourceTree = "<group>"; };
+		96062D74192D96550089E3BB /* win.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = win.png; sourceTree = "<group>"; };
+		96062D77192D96CA0089E3BB /* snailWalk1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snailWalk1.png; sourceTree = "<group>"; };
+		96062D78192D96CA0089E3BB /* snailWalk1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "snailWalk1@2x.png"; sourceTree = "<group>"; };
+		96062D79192D96CA0089E3BB /* snailWalk2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snailWalk2.png; sourceTree = "<group>"; };
+		96062D7A192D96CA0089E3BB /* snailWalk2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "snailWalk2@2x.png"; sourceTree = "<group>"; };
 		9611B31B1925BF4B00B71CF4 /* frogGroan.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogGroan.wav; sourceTree = "<group>"; };
 		9635FB281921D28D008C9FF8 /* SKTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKTUtils.h; sourceTree = "<group>"; };
 		9635FB611922059B008C9FF8 /* frog.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog.1.png; sourceTree = "<group>"; };
 		9635FB621922059B008C9FF8 /* frog.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frog.1@2x.png"; sourceTree = "<group>"; };
 		9635FB631922059B008C9FF8 /* frog.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = frog.plist; sourceTree = "<group>"; };
+		963C5906192EE43700D3187A /* scene-iphone.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scene-iphone.1.png"; sourceTree = "<group>"; };
+		963C5907192EE43700D3187A /* scene-iphone.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scene-iphone.1@2x.png"; sourceTree = "<group>"; };
+		963C5908192EE43700D3187A /* scene-iphone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "scene-iphone.plist"; sourceTree = "<group>"; };
+		963C5914192EEB4300D3187A /* frog-iphone.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frog-iphone.1.png"; sourceTree = "<group>"; };
+		963C5915192EEB4300D3187A /* frog-iphone.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frog-iphone.1@2x.png"; sourceTree = "<group>"; };
+		963C5916192EEB4300D3187A /* frog-iphone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "frog-iphone.plist"; sourceTree = "<group>"; };
 		96464170191A7E5F0008A0CA /* MGD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96464173191A7E5F0008A0CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96464175191A7E5F0008A0CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -81,10 +104,6 @@
 		96B6B43319258E9D000B8F44 /* scene.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.1.png; sourceTree = "<group>"; };
 		96B6B43419258E9D000B8F44 /* scene.1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scene.1@2x.png"; sourceTree = "<group>"; };
 		96B6B43519258E9D000B8F44 /* scene.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = scene.plist; sourceTree = "<group>"; };
-		96B6B4391925AA97000B8F44 /* snailWalk1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = snailWalk1.png; path = ../../../Art/snailWalk1.png; sourceTree = "<group>"; };
-		96B6B43A1925AA97000B8F44 /* snailWalk1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "snailWalk1@2x.png"; path = "../../../Art/snailWalk1@2x.png"; sourceTree = "<group>"; };
-		96B6B43B1925AA97000B8F44 /* snailWalk2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = snailWalk2.png; path = ../../../Art/snailWalk2.png; sourceTree = "<group>"; };
-		96B6B43C1925AA97000B8F44 /* snailWalk2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "snailWalk2@2x.png"; path = "../../../Art/snailWalk2@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +141,26 @@
 			path = frog.atlasc;
 			sourceTree = "<group>";
 		};
+		963C5905192EE43700D3187A /* scene-iphone.atlasc */ = {
+			isa = PBXGroup;
+			children = (
+				963C5906192EE43700D3187A /* scene-iphone.1.png */,
+				963C5907192EE43700D3187A /* scene-iphone.1@2x.png */,
+				963C5908192EE43700D3187A /* scene-iphone.plist */,
+			);
+			path = "scene-iphone.atlasc";
+			sourceTree = "<group>";
+		};
+		963C5913192EEB4300D3187A /* frog-iphone.atlasc */ = {
+			isa = PBXGroup;
+			children = (
+				963C5914192EEB4300D3187A /* frog-iphone.1.png */,
+				963C5915192EEB4300D3187A /* frog-iphone.1@2x.png */,
+				963C5916192EEB4300D3187A /* frog-iphone.plist */,
+			);
+			path = "frog-iphone.atlasc";
+			sourceTree = "<group>";
+		};
 		96464167191A7E5F0008A0CA = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +195,8 @@
 		9646417B191A7E5F0008A0CA /* MGD */ = {
 			isa = PBXGroup;
 			children = (
+				963C5913192EEB4300D3187A /* frog-iphone.atlasc */,
+				963C5905192EE43700D3187A /* scene-iphone.atlasc */,
 				9699ACF8191C6A6000E199B4 /* Audio */,
 				9699ACF1191C5C1C00E199B4 /* Images */,
 				96464184191A7E5F0008A0CA /* AppDelegate.h */,
@@ -165,6 +206,8 @@
 				9646418B191A7E5F0008A0CA /* ViewController.m */,
 				9646418D191A7E5F0008A0CA /* MyScene.h */,
 				9646418E191A7E5F0008A0CA /* MyScene.m */,
+				96062D70192D88440089E3BB /* GameOverScene.h */,
+				96062D71192D88440089E3BB /* GameOverScene.m */,
 				96464192191A7E5F0008A0CA /* Images.xcassets */,
 				9646417C191A7E5F0008A0CA /* Supporting Files */,
 				9635FB281921D28D008C9FF8 /* SKTUtils.h */,
@@ -204,10 +247,12 @@
 		9699ACF1191C5C1C00E199B4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				96B6B4391925AA97000B8F44 /* snailWalk1.png */,
-				96B6B43A1925AA97000B8F44 /* snailWalk1@2x.png */,
-				96B6B43B1925AA97000B8F44 /* snailWalk2.png */,
-				96B6B43C1925AA97000B8F44 /* snailWalk2@2x.png */,
+				96062D77192D96CA0089E3BB /* snailWalk1.png */,
+				96062D78192D96CA0089E3BB /* snailWalk1@2x.png */,
+				96062D79192D96CA0089E3BB /* snailWalk2.png */,
+				96062D7A192D96CA0089E3BB /* snailWalk2@2x.png */,
+				96062D73192D96550089E3BB /* lose.png */,
+				96062D74192D96550089E3BB /* win.png */,
 				96B6B43219258E9D000B8F44 /* scene.atlasc */,
 				9635FB601922059B008C9FF8 /* frog.atlasc */,
 			);
@@ -310,18 +355,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96B6B43D1925AA97000B8F44 /* snailWalk1.png in Resources */,
+				963C590B192EE43700D3187A /* scene-iphone.plist in Resources */,
+				963C5919192EEB4300D3187A /* frog-iphone.plist in Resources */,
+				96062D76192D96550089E3BB /* win.png in Resources */,
+				96062D75192D96550089E3BB /* lose.png in Resources */,
+				96062D7E192D96CA0089E3BB /* snailWalk2@2x.png in Resources */,
 				9635FB651922059B008C9FF8 /* frog.1@2x.png in Resources */,
+				96062D7B192D96CA0089E3BB /* snailWalk1.png in Resources */,
+				96062D7D192D96CA0089E3BB /* snailWalk2.png in Resources */,
 				9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */,
+				963C5909192EE43700D3187A /* scene-iphone.1.png in Resources */,
+				96062D7C192D96CA0089E3BB /* snailWalk1@2x.png in Resources */,
 				96B6B43719258E9D000B8F44 /* scene.1@2x.png in Resources */,
+				963C5917192EEB4300D3187A /* frog-iphone.1.png in Resources */,
 				96B6B43819258E9D000B8F44 /* scene.plist in Resources */,
-				96B6B4401925AA97000B8F44 /* snailWalk2@2x.png in Resources */,
-				96B6B43F1925AA97000B8F44 /* snailWalk2.png in Resources */,
 				96464180191A7E5F0008A0CA /* InfoPlist.strings in Resources */,
 				96B6B43619258E9D000B8F44 /* scene.1.png in Resources */,
+				963C5918192EEB4300D3187A /* frog-iphone.1@2x.png in Resources */,
 				9635FB641922059B008C9FF8 /* frog.1.png in Resources */,
 				96464193191A7E5F0008A0CA /* Images.xcassets in Resources */,
-				96B6B43E1925AA97000B8F44 /* snailWalk1@2x.png in Resources */,
+				963C590A192EE43700D3187A /* scene-iphone.1@2x.png in Resources */,
 				9635FB661922059B008C9FF8 /* frog.plist in Resources */,
 				9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */,
 				9611B31C1925BF4B00B71CF4 /* frogGroan.wav in Resources */,
@@ -344,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96062D72192D88440089E3BB /* GameOverScene.m in Sources */,
 				9646418F191A7E5F0008A0CA /* MyScene.m in Sources */,
 				9646418C191A7E5F0008A0CA /* ViewController.m in Sources */,
 				96464186191A7E5F0008A0CA /* AppDelegate.m in Sources */,
@@ -479,6 +533,7 @@
 				INFOPLIST_FILE = "MGD/MGD-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -493,6 +548,7 @@
 				INFOPLIST_FILE = "MGD/MGD-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

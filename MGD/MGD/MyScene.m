@@ -112,7 +112,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
         }
         
         _livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        _livesLabel.text = @"Lives 5";
+        _livesLabel.text = [NSString stringWithFormat:@"Lives %d", _lives];
         _livesLabel.fontSize = 30;
         _livesLabel.position = CGPointMake(60, 980);
         _livesLabel.zPosition = 500;
@@ -391,6 +391,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
              NSLog(@"Collision detected");
              [[self scene] runAction:[SKAction playSoundFileNamed:@"frogGroan.wav" waitForCompletion:YES]];
              _lives--;
+             _livesLabel.text = [NSString stringWithFormat:@"Lives %d", _lives];
              [_frog removeFromParent];
              [self respawnFrog];
              

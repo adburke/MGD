@@ -111,10 +111,10 @@ static const float FROG_MOVE_DISTANCE = 64.0;
             }
         }
         
-        _livesLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+        _livesLabel = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-CondensedBlack"];
         _livesLabel.text = [NSString stringWithFormat:@"Lives %d", _lives];
-        _livesLabel.fontSize = 30;
-        _livesLabel.position = CGPointMake(60, 980);
+        _livesLabel.fontSize = 35;
+        _livesLabel.position = CGPointMake(65, 980);
         _livesLabel.zPosition = 500;
         [self addChild:_livesLabel];
         
@@ -434,14 +434,6 @@ static const float FROG_MOVE_DISTANCE = 64.0;
         SKAction *performSelector = [SKAction performSelector:@selector(pause) onTarget:self];
         SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
         [self runAction:sequence];
-//        
-//        SKAction *action = [SKAction runBlock:^{
-//            [_pauseLabel setHidden:!_pauseLabel.hidden];
-//        }];
-//        
-//        [_pauseLabel runAction:action completion:^{
-//            [self.scene.view setPaused:!self.scene.paused];
-//        }];
         
     }
 }

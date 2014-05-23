@@ -44,6 +44,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     SKSpriteNode *_dirtFinish;
     SKSpriteNode *_stone;
     SKSpriteNode *_grass;
+    SKSpriteNode *_death;
     
     SKAction *_frogAnimationForward;
     SKAction *_frogAnimationBackward;
@@ -117,7 +118,6 @@ static const float FROG_MOVE_DISTANCE = 64.0;
         _livesLabel.position = CGPointMake(65, 980);
         _livesLabel.zPosition = 500;
         [self addChild:_livesLabel];
-        
         
         //@"Frog Forward/frog1@2x"
         _frog = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_frogAtlas] textureNamed:@"Frog Forward/frog1"]];
@@ -383,6 +383,8 @@ static const float FROG_MOVE_DISTANCE = 64.0;
          }
      }];
     
+    if (_death) {return;}
+    
     [self enumerateChildNodesWithName:@"snail" usingBlock:^(SKNode *node, BOOL *stop)
      {
          SKSpriteNode *snail = (SKSpriteNode *)node;
@@ -392,8 +394,16 @@ static const float FROG_MOVE_DISTANCE = 64.0;
              [[self scene] runAction:[SKAction playSoundFileNamed:@"frogGroan.wav" waitForCompletion:YES]];
              _lives--;
              _livesLabel.text = [NSString stringWithFormat:@"Lives %d", _lives];
+             
+             _death = [SKSpriteNode spriteNodeWithImageNamed:@"death.png"];
+             _death.position = CGPointMake(_frog.position.x, _frog.position.y);
              [_frog removeFromParent];
-             [self respawnFrog];
+             [self addChild:_death];
+             
+             SKAction *wait = [SKAction waitForDuration:1];
+             SKAction *performSelector = [SKAction performSelector:@selector(respawnFrog) onTarget:self];
+             SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
+             [self runAction:sequence];
              
          }
      }];
@@ -401,6 +411,9 @@ static const float FROG_MOVE_DISTANCE = 64.0;
 
 - (void)respawnFrog
 {
+    [_death removeFromParent];
+    _death = nil;
+    
     _frog = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:@"frog"] textureNamed: @"Frog Forward/frog1"]];
     _frog.position = CGPointMake(384, 32);
     _frog.name = @"frog";

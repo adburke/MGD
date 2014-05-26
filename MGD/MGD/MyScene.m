@@ -59,6 +59,9 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     int _lives;
     BOOL _gameOver;
     BOOL _win;
+    BOOL _isMoving;
+    BOOL _isFloating;
+    int _randomNum;
     
     NSString *_frogAtlas;
     NSString *_sceneAtlas;
@@ -75,9 +78,11 @@ static const float FROG_MOVE_DISTANCE = 64.0;
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         
+        _randomNum = (1 + arc4random_uniform(3 - 1 + 1));
         _lives = 5;
         _gameOver = NO;
         _win = NO;
+        _isMoving = NO;
         self.view.paused = NO;
         
         size_t size;
@@ -242,7 +247,10 @@ static const float FROG_MOVE_DISTANCE = 64.0;
                          [SKAction sequence:@[
                                               [SKAction performSelector:@selector(spawnSnail) onTarget:self],
                                               [SKAction waitForDuration:0.5]]]]];
-        
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction performSelector:@selector(spawnLily) onTarget:self],
+                                              [SKAction waitForDuration:2]]]]];
     }
     return self;
 }
@@ -261,6 +269,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
+    
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self.scene];
     if (self.view.paused) {
@@ -269,6 +278,8 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     }
     Side side = [self getSideSelected:location];
     NSLog(@"Side selected = %d", side);
+    _isMoving = YES;
+    [_frog removeAllActions];
     [self moveFrogInDirection:side];
     [[self scene] runAction:_frogSound];
     
@@ -313,24 +324,62 @@ static const float FROG_MOVE_DISTANCE = 64.0;
 {
     if (side == 1) {
         CGVector negDelta = CGVectorMake(0,FROG_MOVE_DISTANCE);
-        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationForward]];
-        [_frog runAction:group];
+        SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
+        SKAction *sequence = [SKAction sequence:@[group, performSelector]];
+        [_frog runAction:sequence];
     } else if (side == 0) {
         CGVector negDelta = CGVectorMake(FROG_MOVE_DISTANCE,0);
-        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationRight]];
-        [_frog runAction:group];
+        SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
+        SKAction *sequence = [SKAction sequence:@[group, performSelector]];
+        [_frog runAction:sequence];
     } else if (side == 2) {
         CGVector negDelta = CGVectorMake(-FROG_MOVE_DISTANCE,0);
-        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationLeft]];
-        [_frog runAction:group];
+        SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
+        SKAction *sequence = [SKAction sequence:@[group, performSelector]];
+        [_frog runAction:sequence];
     } else if (side == 3) {
         CGVector negDelta = CGVectorMake(0,-FROG_MOVE_DISTANCE);
-        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.2];
+        SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationBackward]];
-        [_frog runAction:group];
+        SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
+        SKAction *sequence = [SKAction sequence:@[group, performSelector]];
+        [_frog runAction:sequence];
+    }
+//    _isMoving = NO;
+//    SKAction *wait = [SKAction waitForDuration:1];
+//    SKAction *performSelector = [SKAction performSelector:@selector(respawnFrog) onTarget:self];
+//    SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
+//    [self runAction:sequence];
+
+}
+
+- (void)checkMovement
+{
+    _isMoving = NO;
+    _isFloating = NO;
+    [self checkCollisions];
+    if (_frog.position.y > (_dirtStart.size.height + _grass.size.height + _stone.size.height) && !_isFloating) {
+        NSLog(@"DIED IN WATER");
+        [[self scene] runAction:_waterSound];
+        _lives--;
+        _livesLabel.text = [NSString stringWithFormat:@"Lives %d", _lives];
+        
+        _death = [SKSpriteNode spriteNodeWithImageNamed:@"death.png"];
+        _death.position = CGPointMake(_frog.position.x, _frog.position.y);
+        _death.zPosition = 500;
+        [_frog removeFromParent];
+        [self addChild:_death];
+        
+        SKAction *wait = [SKAction waitForDuration:1];
+        SKAction *performSelector = [SKAction performSelector:@selector(respawnFrog) onTarget:self];
+        SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
+        [self runAction:sequence];
     }
 }
 
@@ -354,21 +403,21 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     [snail runAction:[SKAction sequence:@[group, actionRemove]]];
 }
 
+- (void)spawnLily
+{
+    SKSpriteNode *lily = [SKSpriteNode spriteNodeWithImageNamed:@"lily"];
+    lily.name = @"lily";
+    CGPoint lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+32);
+    lily.position = [self convertPoint:lilyScenePos toNode:self];
+    [self addChild:lily];
+    
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(-lily.size.width/2,lily.position.y) duration:5.0];
+    SKAction *actionRemove = [SKAction removeFromParent];
+    [lily runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+}
+
 - (void)checkCollisions
 {
-    
-//    [self enumerateChildNodesWithName:@"water" usingBlock:^(SKNode *node, BOOL *stop)
-//    {
-//        SKSpriteNode *water = (SKSpriteNode *)node;
-//        CGRect smallerFrame = CGRectInset(water.frame, 20, 20);
-//        if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
-//            NSLog(@"Collision detected");
-//            [[self scene] runAction:_waterSound];
-//            _lives--;
-//            [_frog removeFromParent];
-//            [self respawnFrog];
-//        }
-//    }];
     
     [self enumerateChildNodesWithName:@"finish" usingBlock:^(SKNode *node, BOOL *stop)
      {
@@ -408,6 +457,44 @@ static const float FROG_MOVE_DISTANCE = 64.0;
              
          }
      }];
+    
+    if (_isMoving) {return;}
+    
+    [self enumerateChildNodesWithName:@"lily" usingBlock:^(SKNode *node, BOOL *stop)
+     {
+         SKSpriteNode *lily = (SKSpriteNode *)node;
+         CGRect smallerFrame = CGRectInset(lily.frame, 30, 30);
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+             NSLog(@"Collision detected");
+             _isFloating = YES;
+             [self frogFloat:lily];
+             
+         }
+     }];
+    
+//    if (!_isMoving && !_isFloating) {
+//        [self enumerateChildNodesWithName:@"water" usingBlock:^(SKNode *node, BOOL *stop)
+//         {
+//             SKSpriteNode *water = (SKSpriteNode *)node;
+//             CGRect smallerFrame = CGRectInset(water.frame, 20, 20);
+//             if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+//                 NSLog(@"Collision detected");
+//                 [[self scene] runAction:_waterSound];
+//                 _lives--;
+//                 [_frog removeFromParent];
+//                 [self respawnFrog];
+//             }
+//         }];
+//    }
+    
+    
+}
+
+- (void)frogFloat:(SKSpriteNode*)lily
+{
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(lily.position.x-15,lily.position.y) duration:0.1];
+    [_frog runAction:actionMove];
+    
 }
 
 - (void)respawnFrog
@@ -421,6 +508,7 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     _frog.zPosition = 300;
     _frog.userInteractionEnabled = YES;
     _frogSound = [SKAction playSoundFileNamed:@"frogJump.wav" waitForCompletion:NO];
+    _isMoving = NO;
     [self addChild:_frog];
 }
 

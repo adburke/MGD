@@ -42,6 +42,8 @@
 		9646419C191A7E5F0008A0CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96464177191A7E5F0008A0CA /* UIKit.framework */; };
 		964641A4191A7E5F0008A0CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 964641A2191A7E5F0008A0CA /* InfoPlist.strings */; };
 		964641A6191A7E5F0008A0CA /* MGDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 964641A5191A7E5F0008A0CA /* MGDTests.m */; };
+		96472C0F1933A3C6008DFC4A /* lily.png in Resources */ = {isa = PBXBuildFile; fileRef = 96472C0D1933A3C6008DFC4A /* lily.png */; };
+		96472C101933A3C6008DFC4A /* lily@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96472C0E1933A3C6008DFC4A /* lily@2x.png */; };
 		9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFD191C7F9F00E199B4 /* frogJump.wav */; };
 		9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFE191C7F9F00E199B4 /* waterSplash.wav */; };
 		96B6B43619258E9D000B8F44 /* scene.1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B6B43319258E9D000B8F44 /* scene.1.png */; };
@@ -103,6 +105,8 @@
 		964641A1191A7E5F0008A0CA /* MGDTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MGDTests-Info.plist"; sourceTree = "<group>"; };
 		964641A3191A7E5F0008A0CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		964641A5191A7E5F0008A0CA /* MGDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGDTests.m; sourceTree = "<group>"; };
+		96472C0D1933A3C6008DFC4A /* lily.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lily.png; sourceTree = "<group>"; };
+		96472C0E1933A3C6008DFC4A /* lily@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lily@2x.png"; sourceTree = "<group>"; };
 		9699ACFD191C7F9F00E199B4 /* frogJump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogJump.wav; sourceTree = "<group>"; };
 		9699ACFE191C7F9F00E199B4 /* waterSplash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterSplash.wav; sourceTree = "<group>"; };
 		96B6B43319258E9D000B8F44 /* scene.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scene.1.png; sourceTree = "<group>"; };
@@ -251,6 +255,8 @@
 		9699ACF1191C5C1C00E199B4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				96472C0D1933A3C6008DFC4A /* lily.png */,
+				96472C0E1933A3C6008DFC4A /* lily@2x.png */,
 				963C591A192F034E00D3187A /* death.png */,
 				963C591B192F034E00D3187A /* death@2x.png */,
 				96062D77192D96CA0089E3BB /* snailWalk1.png */,
@@ -363,6 +369,8 @@
 			files = (
 				963C590B192EE43700D3187A /* scene-iphone.plist in Resources */,
 				963C5919192EEB4300D3187A /* frog-iphone.plist in Resources */,
+				96472C101933A3C6008DFC4A /* lily@2x.png in Resources */,
+				96472C0F1933A3C6008DFC4A /* lily.png in Resources */,
 				96062D76192D96550089E3BB /* win.png in Resources */,
 				963C591D192F034E00D3187A /* death@2x.png in Resources */,
 				96062D75192D96550089E3BB /* lose.png in Resources */,

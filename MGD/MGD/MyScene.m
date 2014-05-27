@@ -247,10 +247,46 @@ static const float FROG_MOVE_DISTANCE = 64.0;
                          [SKAction sequence:@[
                                               [SKAction performSelector:@selector(spawnSnail) onTarget:self],
                                               [SKAction waitForDuration:0.5]]]]];
+        
+        // Spawn Lily pads
         [self runAction:[SKAction repeatActionForever:
                          [SKAction sequence:@[
-                                              [SKAction performSelector:@selector(spawnLily) onTarget:self],
+                                              [SKAction runBlock:^{
+                                                                     [self spawnLily:1];
+                                                                 }],
+                                              [SKAction waitForDuration:4]]]]];
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction runBlock:^{
+                                                                     [self spawnLily:2];
+                                                                 }],
                                               [SKAction waitForDuration:2]]]]];
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction runBlock:^{
+                             [self spawnLily:3];
+                         }],
+                                              [SKAction waitForDuration:5]]]]];
+        
+        // Spawn Logs
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction runBlock:^{
+                                                                    [self spawnLog:1];
+                                                                    }],
+                                              [SKAction waitForDuration:5]]]]];
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction runBlock:^{
+                                                                     [self spawnLog:2];
+                                                                 }],
+                                              [SKAction waitForDuration:6]]]]];
+        [self runAction:[SKAction repeatActionForever:
+                         [SKAction sequence:@[
+                                              [SKAction runBlock:^{
+                             [self spawnLog:3];
+                         }],
+                                              [SKAction waitForDuration:8]]]]];
     }
     return self;
 }
@@ -364,7 +400,8 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     _isMoving = NO;
     _isFloating = NO;
     [self checkCollisions];
-    if (_frog.position.y > (_dirtStart.size.height + _grass.size.height + _stone.size.height) && !_isFloating) {
+    if (_frog.position.y > (_dirtStart.size.height + _grass.size.height + _stone.size.height) &&
+        _frog.position.y < (self.scene.size.height - 64) && !_isFloating) {
         NSLog(@"DIED IN WATER");
         [[self scene] runAction:_waterSound];
         _lives--;
@@ -403,17 +440,101 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     [snail runAction:[SKAction sequence:@[group, actionRemove]]];
 }
 
-- (void)spawnLily
+- (void)spawnLily:(int)position
 {
-    SKSpriteNode *lily = [SKSpriteNode spriteNodeWithImageNamed:@"lily"];
-    lily.name = @"lily";
-    CGPoint lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+32);
-    lily.position = [self convertPoint:lilyScenePos toNode:self];
-    [self addChild:lily];
+    switch (position)
+    {
+        case 1:
+        {
+            SKSpriteNode *lily = [SKSpriteNode spriteNodeWithImageNamed:@"lily"];
+            lily.name = @"lily";
+            CGPoint lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+32);
+            lily.position = [self convertPoint:lilyScenePos toNode:self];
+            [self addChild:lily];
+            
+            SKAction *actionMove = [SKAction moveTo:CGPointMake(-lily.size.width/2,lily.position.y) duration:10.0];
+            SKAction *actionRemove = [SKAction removeFromParent];
+            [lily runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+        }
+        case 2:
+        {
+            SKSpriteNode *lily = [SKSpriteNode spriteNodeWithImageNamed:@"lily"];
+            lily.name = @"lily";
+            CGPoint lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+2*64+32+5);
+            lily.position = [self convertPoint:lilyScenePos toNode:self];
+            [self addChild:lily];
+            
+            SKAction *actionMove = [SKAction moveTo:CGPointMake(-lily.size.width/2,lily.position.y) duration:8.0];
+            SKAction *actionRemove = [SKAction removeFromParent];
+            [lily runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+        }
+        case 3:
+        {
+            SKSpriteNode *lily = [SKSpriteNode spriteNodeWithImageNamed:@"lily"];
+            lily.name = @"lily";
+            CGPoint lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+4*64+32+5);
+            lily.position = [self convertPoint:lilyScenePos toNode:self];
+            [self addChild:lily];
+            
+            SKAction *actionMove = [SKAction moveTo:CGPointMake(-lily.size.width/2,lily.position.y) duration:5.0];
+            SKAction *actionRemove = [SKAction removeFromParent];
+            [lily runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+        }
+        default:
+            break;
+    }
+}
+
+- (void)spawnLog:(int)position
+{
+    switch (position)
+    {
+        case 1:
+        {
+            SKSpriteNode *log = [SKSpriteNode spriteNodeWithImageNamed:@"log"];
+            log.name = @"log";
+            //log.yScale = 0.8;
+            CGPoint logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-64-_water.frame.size.height+64+32+5);
+            log.position = [self convertPoint:logScenePos toNode:self];
+            [self addChild:log];
+            
+            SKAction *actionMove = [SKAction moveTo:CGPointMake(self.size.width + log.size.width/2,log.position.y) duration:10.0];
+            SKAction *actionRemove = [SKAction removeFromParent];
+            [log runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+            break;
+        }
+        case 2:
+        {
+            SKSpriteNode *log = [SKSpriteNode spriteNodeWithImageNamed:@"log"];
+            log.name = @"log";
+            CGPoint logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-64-_water.frame.size.height+3*64+32+5);
+            log.position = [self convertPoint:logScenePos toNode:self];
+            [self addChild:log];
+            
+            SKAction *actionMove = [SKAction moveTo:CGPointMake(self.size.width + log.size.width/2,log.position.y) duration:20.0];
+            SKAction *actionRemove = [SKAction removeFromParent];
+            [log runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+            break;
+        }
+        case 3:
+        {
+            SKSpriteNode *log = [SKSpriteNode spriteNodeWithImageNamed:@"log"];
+            log.name = @"log";
+            //log.yScale = 0.7;
+            CGPoint logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-64-_water.frame.size.height+5*64+32+5);
+            log.position = [self convertPoint:logScenePos toNode:self];
+            [self addChild:log];
+            
+            SKAction *actionMove = [SKAction moveTo:CGPointMake(self.size.width + log.size.width/2,log.position.y) duration:15.0];
+            SKAction *actionRemove = [SKAction removeFromParent];
+            [log runAction:[SKAction sequence:@[actionMove, actionRemove]]];
+            break;
+        }
+            
+        default:
+            break;
+    }
     
-    SKAction *actionMove = [SKAction moveTo:CGPointMake(-lily.size.width/2,lily.position.y) duration:5.0];
-    SKAction *actionRemove = [SKAction removeFromParent];
-    [lily runAction:[SKAction sequence:@[actionMove, actionRemove]]];
 }
 
 - (void)checkCollisions
@@ -463,11 +584,23 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     [self enumerateChildNodesWithName:@"lily" usingBlock:^(SKNode *node, BOOL *stop)
      {
          SKSpriteNode *lily = (SKSpriteNode *)node;
-         CGRect smallerFrame = CGRectInset(lily.frame, 30, 30);
+         CGRect smallerFrame = CGRectInset(lily.frame, 20, 20);
          if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
              NSLog(@"Collision detected");
              _isFloating = YES;
              [self frogFloat:lily];
+             
+         }
+     }];
+    
+    [self enumerateChildNodesWithName:@"log" usingBlock:^(SKNode *node, BOOL *stop)
+     {
+         SKSpriteNode *log = (SKSpriteNode *)node;
+         CGRect smallerFrame = CGRectInset(log.frame, 30, 30);
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+             NSLog(@"Collision detected");
+             _isFloating = YES;
+             [self frogFloat:log];
              
          }
      }];
@@ -490,9 +623,15 @@ static const float FROG_MOVE_DISTANCE = 64.0;
     
 }
 
-- (void)frogFloat:(SKSpriteNode*)lily
+- (void)frogFloat:(SKSpriteNode*)node
 {
-    SKAction *actionMove = [SKAction moveTo:CGPointMake(lily.position.x-15,lily.position.y) duration:0.1];
+    SKAction *actionMove;
+    if ([node.name  isEqual: @"lily"]) {
+        actionMove = [SKAction moveTo:CGPointMake(node.position.x-15,node.position.y) duration:0.1];
+    } else if ([node.name  isEqual: @"log"]){
+        actionMove = [SKAction moveTo:CGPointMake(node.position.x,node.position.y) duration:0.1];
+    }
+    
     [_frog runAction:actionMove];
     
 }

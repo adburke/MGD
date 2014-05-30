@@ -1,18 +1,18 @@
 //
-//  GameOverScene.m
+//  MenuScene.m
 //  MGD
 //
-//  Created by Aaron Burke on 5/21/14.
+//  Created by Aaron Burke on 5/29/14.
 //  Copyright (c) 2014 Aaron Burke. All rights reserved.
 //
 
-#import "GameOverScene.h"
-#import "MyScene.h"
 #import "MenuScene.h"
+#import "MyScene.h"
+#import "CreditsScene.h"
+#import "HelpScene.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
-
 
 #define IS_WIDESCREEN ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
@@ -24,21 +24,23 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
 };
 
-@implementation GameOverScene
+
+@implementation MenuScene
 {
     NSString *_sceneAtlas;
     
-    SKSpriteNode *_background;
-    SKSpriteNode *_menuBtn;
+    SKSpriteNode *_creditsBtn;
     SKSpriteNode *_playBtn;
+    SKSpriteNode *_helpBtn;
     
     DeviceType _deviceType;
 }
 
 
-- (id)initWithSize:(CGSize)size won:(BOOL)won
+-(id)initWithSize:(CGSize)size
 {
-    if (self = [super initWithSize:size]) {
+    if (self = [super initWithSize:size])
+    {
         
         size_t size;
         sysctlbyname("hw.machine", NULL, &size, NULL, 0);
@@ -72,42 +74,33 @@ typedef NS_ENUM(NSInteger, DeviceType)
             }
         }
         
-        if (won) {
-            _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/win"]];
-        } else {
-            _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/lose"]];
-        }
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/menu"]];
+        background.name = @"background";
+        background.userInteractionEnabled = NO;
+        background.position = CGPointMake(self.scene.size.width/2, self.scene.size.height/2);
         
-        _background.name = @"background";
-        _background.userInteractionEnabled = NO;
-        _background.position = CGPointMake(self.scene.size.width/2, self.scene.size.height/2);
-        
-        [self addChild:_background];
+        [self addChild:background];
         
         _playBtn = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Buttons/start-play-button"]];
         _playBtn.name = @"playBtn";
         _playBtn.userInteractionEnabled = NO;
-        
-        _menuBtn = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Buttons/start-menu-button"]];
-        _menuBtn.name = @"menuBtn";
-        _menuBtn.userInteractionEnabled = NO;
-        
-        NSArray *nodes = @[_playBtn, _menuBtn];
+
+        _creditsBtn = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Buttons/menu-credits-button"]];
+        _creditsBtn.name = @"creditsBtn";
+        _creditsBtn.userInteractionEnabled = NO;
+    
+        _helpBtn = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Buttons/menu-help-button"]];
+        _helpBtn.name = @"helpBtn";
+        _helpBtn.userInteractionEnabled = NO;
+      
+        NSArray *nodes = @[_playBtn, _creditsBtn, _helpBtn];
         [self setupScene:_deviceType];
         for (SKSpriteNode *node in nodes) {
             [self addChild:node];
         }
         
-//        // Start the game over
-//        SKAction * wait = [SKAction waitForDuration:3.0];
-//        SKAction * block = [SKAction runBlock:^{
-//            MyScene * myScene = [[MyScene alloc] initWithSize:self.size];
-//            SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
-//            [self.view presentScene:myScene transition: transition];
-//        }];
-//        [self runAction:[SKAction sequence:@[wait, block]]];
-        
     }
+    
     return self;
 }
 
@@ -121,9 +114,12 @@ typedef NS_ENUM(NSInteger, DeviceType)
     if ([node.name isEqualToString:@"playBtn"]) {
         NSLog(@"Play Btn selected");
         [self playAction];
-    } else if ([node.name isEqualToString:@"menuBtn"]) {
-        NSLog(@"Menu Btn selected");
-        [self menuAction];
+    } else if ([node.name isEqualToString:@"creditsBtn"]) {
+        NSLog(@"Credits Btn selected");
+        [self creditsAction];
+    } else if ([node.name isEqualToString:@"helpBtn"]) {
+        NSLog(@"Help Btn selected");
+        [self helpAction];
     }
     
 }
@@ -139,12 +135,20 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
 }
 
-- (void)menuAction
+- (void)creditsAction
 {
     SKAction *fadeOut = [SKAction fadeAlphaTo:0.4 duration:0.1];
     SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.1];
-    SKAction *performSelector = [SKAction performSelector:@selector(launchMenu) onTarget:self];
-    [_menuBtn runAction:[SKAction sequence:@[fadeOut, fadeIn, performSelector]]];
+    SKAction *performSelector = [SKAction performSelector:@selector(launchCredits) onTarget:self];
+    [_creditsBtn runAction:[SKAction sequence:@[fadeOut, fadeIn, performSelector]]];
+}
+
+- (void)helpAction
+{
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0.4 duration:0.1];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.1];
+    SKAction *performSelector = [SKAction performSelector:@selector(launchHelp) onTarget:self];
+    [_helpBtn runAction:[SKAction sequence:@[fadeOut, fadeIn, performSelector]]];
 }
 
 - (void)launchGame
@@ -154,32 +158,44 @@ typedef NS_ENUM(NSInteger, DeviceType)
     [self.view presentScene:myScene transition:transition];
 }
 
-- (void)launchMenu
+- (void)launchCredits
 {
-    MenuScene *menuScene = [[MenuScene alloc] initWithSize:self.size];
+    CreditsScene *creditsScene = [[CreditsScene alloc] initWithSize:self.size];
     SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
-    [self.view presentScene:menuScene transition:transition];
+    [self.view presentScene:creditsScene transition:transition];
+}
+
+- (void)launchHelp
+{
+    HelpScene *helpScene = [[HelpScene alloc] initWithSize:self.size];
+    SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
+    [self.view presentScene:helpScene transition:transition];
 }
 
 - (void)setupScene:(DeviceType)deviceType
 {
     switch (deviceType) {
         case 0:
-            _playBtn.position = CGPointMake(self.scene.size.width/2, 131);
-            _menuBtn.position = CGPointMake(self.scene.size.width/2, 80);
+            _playBtn.position = CGPointMake(self.scene.size.width/2, 260);
+            _creditsBtn.position = CGPointMake(self.scene.size.width/2, 209);
+            _helpBtn.position = CGPointMake(self.scene.size.width/2, 150);
             break;
         case 1:
-            _playBtn.position = CGPointMake(self.scene.size.width/2, 160.0);
-            _menuBtn.position = CGPointMake(self.scene.size.width/2, 100.0);
+            _playBtn.position = CGPointMake(self.scene.size.width/2, 350);
+            _creditsBtn.position = CGPointMake(self.scene.size.width/2, 290);
+            _helpBtn.position = CGPointMake(self.scene.size.width/2, 230);
             break;
         case 2:
-            _playBtn.position = CGPointMake(self.scene.size.width/2, 210.0);
-            _menuBtn.position = CGPointMake(self.scene.size.width/2, 88.0);
+            _playBtn.position = CGPointMake(self.scene.size.width/2, 596.0);
+            _creditsBtn.position = CGPointMake(self.scene.size.width/2, 354.0);
+            _helpBtn.position = CGPointMake(self.scene.size.width/2,474.0);
             break;
             
         default:
             break;
     }
 }
+
+
 
 @end

@@ -1,12 +1,12 @@
 //
-//  GameOverScene.m
+//  StartScene.m
 //  MGD
 //
-//  Created by Aaron Burke on 5/21/14.
+//  Created by Aaron Burke on 5/29/14.
 //  Copyright (c) 2014 Aaron Burke. All rights reserved.
 //
 
-#import "GameOverScene.h"
+#import "StartScene.h"
 #import "MyScene.h"
 #import "MenuScene.h"
 
@@ -24,11 +24,11 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
 };
 
-@implementation GameOverScene
+
+@implementation StartScene
 {
     NSString *_sceneAtlas;
     
-    SKSpriteNode *_background;
     SKSpriteNode *_menuBtn;
     SKSpriteNode *_playBtn;
     
@@ -36,9 +36,10 @@ typedef NS_ENUM(NSInteger, DeviceType)
 }
 
 
-- (id)initWithSize:(CGSize)size won:(BOOL)won
+-(id)initWithSize:(CGSize)size
 {
-    if (self = [super initWithSize:size]) {
+    if (self = [super initWithSize:size])
+    {
         
         size_t size;
         sysctlbyname("hw.machine", NULL, &size, NULL, 0);
@@ -72,17 +73,12 @@ typedef NS_ENUM(NSInteger, DeviceType)
             }
         }
         
-        if (won) {
-            _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/win"]];
-        } else {
-            _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/lose"]];
-        }
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/start-screen"]];
+        background.name = @"background";
+        background.userInteractionEnabled = NO;
+        background.position = CGPointMake(self.scene.size.width/2, self.scene.size.height/2);
         
-        _background.name = @"background";
-        _background.userInteractionEnabled = NO;
-        _background.position = CGPointMake(self.scene.size.width/2, self.scene.size.height/2);
-        
-        [self addChild:_background];
+        [self addChild:background];
         
         _playBtn = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Buttons/start-play-button"]];
         _playBtn.name = @"playBtn";
@@ -97,17 +93,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
         for (SKSpriteNode *node in nodes) {
             [self addChild:node];
         }
-        
-//        // Start the game over
-//        SKAction * wait = [SKAction waitForDuration:3.0];
-//        SKAction * block = [SKAction runBlock:^{
-//            MyScene * myScene = [[MyScene alloc] initWithSize:self.size];
-//            SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
-//            [self.view presentScene:myScene transition: transition];
-//        }];
-//        [self runAction:[SKAction sequence:@[wait, block]]];
-        
     }
+    
     return self;
 }
 
@@ -136,7 +123,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     [_playBtn runAction:[SKAction sequence:@[fadeOut, fadeIn, performSelector]]];
     
     
-    
+
 }
 
 - (void)menuAction

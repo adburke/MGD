@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     SKSpriteNode *_stone;
     SKSpriteNode *_grass;
     SKSpriteNode *_death;
+    SKSpriteNode *_pauseBtn;
     
     SKAction *_frogAnimationForward;
     SKAction *_frogAnimationBackward;
@@ -69,19 +70,13 @@ typedef NS_ENUM(NSInteger, DeviceType)
     BOOL _win;
     BOOL _isMoving;
     BOOL _isFloating;
-    int _randomNum;
     float _frogMoveDistance;
     DeviceType _deviceType;
     
     CGPoint _frogRespawnPos;
     
-    NSString *_frogAtlas;
     NSString *_sceneAtlas;
-    NSString *_ext;
-    
-    UISwipeGestureRecognizer *_leftSwipeGestureRecognizer;
-    UISwipeGestureRecognizer *_rightSwipeGestureRecognizer;
-    
+
     SKLabelNode *_pauseLabel;
     SKLabelNode *_livesLabel;
     
@@ -90,7 +85,6 @@ typedef NS_ENUM(NSInteger, DeviceType)
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         
-        _randomNum = (1 + arc4random_uniform(3 - 1 + 1));
         _lives = 5;
         _gameOver = NO;
         _win = NO;
@@ -167,7 +161,17 @@ typedef NS_ENUM(NSInteger, DeviceType)
         _grass = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed: @"Scene/grass"]];
         _grass.name = @"grass";
         
-        NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass];
+        _pauseBtn = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed: @"Buttons/pause"]];
+        _pauseBtn.name = @"pauseBtn";
+        _pauseBtn.zPosition = 500;
+        _pauseBtn.userInteractionEnabled = NO;
+        
+        _pauseLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial-BoldMT"];
+        _pauseLabel.text = @"PAUSED";
+        _pauseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _pauseLabel.zPosition = 500;
+        
+        NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn];
         [self setupScene:_deviceType];
         for (SKSpriteNode *node in nodes) {
             [self addChild:node];
@@ -301,26 +305,21 @@ typedef NS_ENUM(NSInteger, DeviceType)
     return self;
 }
 
-- (void)didMoveToView:(SKView *)view
-{
-    _leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] init];
-    [_leftSwipeGestureRecognizer addTarget:self action:@selector(showLabel)];
-    [_leftSwipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.view addGestureRecognizer: _leftSwipeGestureRecognizer];
-    _rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] init];
-    [_rightSwipeGestureRecognizer addTarget:self action:@selector(showLabel)];
-    [_rightSwipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.view addGestureRecognizer: _rightSwipeGestureRecognizer];
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self.scene];
-    if (self.view.paused) {
-        self.view.paused = NO;
-        [_pauseLabel removeFromParent];
+    SKNode *node = [self nodeAtPoint:location];
+    
+    if ([node.name isEqualToString:@"pauseBtn"]) {
+        NSLog(@"Pause Btn selected");
+        [self showLabel];
+        return;
+        //[self pause];
+    } else if (self.view.paused) {
+        [self showLabel];
+        return;
     }
     Side side = [self getSideSelected:location];
     NSLog(@"Side selected = %d", side);
@@ -713,26 +712,17 @@ typedef NS_ENUM(NSInteger, DeviceType)
 {
     if (self.view.paused) {
         [_pauseLabel removeFromParent];
-        SKAction *wait = [SKAction waitForDuration:0.4];
-        SKAction *performSelector = [SKAction performSelector:@selector(pause) onTarget:self];
-        SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
-        [self runAction:sequence];
+        [self pauseGame];
     } else {
-        _pauseLabel = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-        _pauseLabel.text = @"PAUSED";
-        _pauseLabel.fontSize = 50;
-        _pauseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-        _pauseLabel.zPosition = 500;
         [self addChild:_pauseLabel];
-        SKAction *wait = [SKAction waitForDuration:0.4];
-        SKAction *performSelector = [SKAction performSelector:@selector(pause) onTarget:self];
-        SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
-        [self runAction:sequence];
+        [self runAction:[SKAction waitForDuration:0.1] completion:^{
+            [self pauseGame];
+        }];
         
     }
 }
 
-- (void)pause
+- (void)pauseGame
 {
     if (self.view.paused) {
         self.view.paused = NO;
@@ -741,6 +731,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
     }
     
 }
+
+// Pause button
+//- (SKSpriteNode *)pauseButtonNode
+//{
+//    SKSpriteNode *pauseNode = [SKSpriteNode spriteNodeWithImageNamed:@"fireButton.png"];
+//    fireNode.position = CGPointMake(fireButtonX,fireButtonY);
+//    fireNode.name = @"fireButtonNode";//how the node is identified later
+//    fireNode.zPosition = 1.0;
+//    return fireNode;
+//}
 
 - (void)setupScene:(DeviceType)deviceType
 {
@@ -755,6 +755,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
             _stone.position = CGPointMake(160, 240);
             _grass.position = CGPointMake(160, 128);
             
+            _pauseBtn.position = CGPointMake(20, 16);
+            _pauseLabel.fontSize = 50;
+            
             _frogRespawnPos = CGPointMake(160, 16);
             break;
         case 1:
@@ -767,6 +770,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
             _stone.position = CGPointMake(160, 301);
             _grass.position = CGPointMake(160, 159);
             
+            _pauseBtn.position = CGPointMake(20, 16);
+            _pauseLabel.fontSize = 50;
+            
             _frogRespawnPos = CGPointMake(160, 16);
             break;
         case 2:
@@ -778,6 +784,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
             _dirtFinish.position = CGPointMake(384, 991);
             _stone.position = CGPointMake(384, 545);
             _grass.position = CGPointMake(384, 289);
+            _pauseBtn.position = CGPointMake(40, 29);
+            _pauseLabel.fontSize = 130;
             
             _frogRespawnPos = CGPointMake(384, 32);
             break;

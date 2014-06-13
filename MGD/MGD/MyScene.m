@@ -65,13 +65,19 @@ typedef NS_ENUM(NSInteger, DeviceType)
     SKAction *_frogSound;
     SKAction *_waterSound;
     
+    int _flies;
     int _lives;
     BOOL _gameOver;
     BOOL _win;
     BOOL _isMoving;
     BOOL _isFloating;
+    BOOL startGamePlay;
+    BOOL gameStarted;
+    NSTimeInterval startTime;
     float _frogMoveDistance;
     DeviceType _deviceType;
+    
+    NSMutableArray *_flySpawnPoints;
     
     CGPoint _frogRespawnPos;
     
@@ -79,6 +85,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
     SKLabelNode *_pauseLabel;
     SKLabelNode *_livesLabel;
+    SKLabelNode *_flyLabel;
+    SKLabelNode *_countDownLabel;
     
 }
 
@@ -90,6 +98,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
         _win = NO;
         _isMoving = NO;
         self.view.paused = NO;
+        gameStarted = NO;
         
         size_t size;
         sysctlbyname("hw.machine", NULL, &size, NULL, 0);
@@ -171,7 +180,15 @@ typedef NS_ENUM(NSInteger, DeviceType)
         _pauseLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         _pauseLabel.zPosition = 500;
         
-        NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn];
+        _flyLabel = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-CondensedBlack"];
+        _flyLabel.text = [NSString stringWithFormat:@"Flies %d of 6", _flies];
+        _flyLabel.zPosition = 500;
+        
+        _countDownLabel = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-CondensedBlack"];
+        _countDownLabel.zPosition = 500;
+        _countDownLabel.text = @"Timer: 40";
+        
+        NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn, _flyLabel, _countDownLabel];
         [self setupScene:_deviceType];
         for (SKSpriteNode *node in nodes) {
             [self addChild:node];
@@ -301,12 +318,22 @@ typedef NS_ENUM(NSInteger, DeviceType)
                              [self spawnLog:3];
                          }],
                                               [SKAction waitForDuration:8]]]]];
+        
+        [self spawnFlys:6];
+
+
     }
     return self;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
+    
+    for (UITouch *touch in touches) {
+        if  (!gameStarted) {
+            startGamePlay = YES;
+        }
+    }
     
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self.scene];
@@ -340,6 +367,23 @@ typedef NS_ENUM(NSInteger, DeviceType)
     } else if (_lives > 0 && _win && !_gameOver){
         _gameOver = YES;
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:TRUE];
+        SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
+        [self.view presentScene:gameOverScene transition:transition];
+    }
+    
+    //reset counter if starting
+    if (startGamePlay){
+        startTime = currentTime;
+        gameStarted = YES;
+        startGamePlay = NO;
+    }
+    
+    int countDownInt = 40.0 -(int)(currentTime-startTime);
+    if (countDownInt > 0){ //if counting down to 0 show counter
+        _countDownLabel.text = [NSString stringWithFormat:@"Timer: %i", countDownInt];
+    } else if (gameStarted && !_gameOver) {
+        _gameOver = YES;
+        SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:FALSE];
         SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
         [self.view presentScene:gameOverScene transition:transition];
     }
@@ -428,6 +472,24 @@ typedef NS_ENUM(NSInteger, DeviceType)
         [self runAction:sequence];
     }
 }
+
+- (void)spawnFlys:(int)num
+{
+    for (int i = 0, j = num; i<j; i++) {
+        SKSpriteNode *fly = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Collection/fly"]];
+        fly.name = @"fly";
+        fly.zPosition = 500;
+        
+        CGPoint flyScenePos = CGPointMake(ScalarRandomRange(0, self.size.width),ScalarRandomRange(0, self.size.height-50));
+        fly.position = [self convertPoint:flyScenePos toNode:self];
+        
+        [self addChild:fly];
+    }
+    
+    
+
+}
+
 
 -(void)spawnSnail
 {
@@ -598,10 +660,12 @@ typedef NS_ENUM(NSInteger, DeviceType)
          CGRect smallerFrame = CGRectInset(finish.frame, 0, 15);
          if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
              NSLog(@"Collision detected");
-             SKAction *wait = [SKAction waitForDuration:0.4];
-             SKAction *performSelector = [SKAction performSelector:@selector(winGame) onTarget:self];
-             SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
-             [self runAction:sequence];
+             if (_flies == 6) {
+                 SKAction *wait = [SKAction waitForDuration:0.4];
+                 SKAction *performSelector = [SKAction performSelector:@selector(winGame) onTarget:self];
+                 SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
+                 [self runAction:sequence];
+             }
          }
      }];
     
@@ -628,6 +692,18 @@ typedef NS_ENUM(NSInteger, DeviceType)
              SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
              [self runAction:sequence];
              
+         }
+     }];
+    
+    [self enumerateChildNodesWithName:@"fly" usingBlock:^(SKNode *node, BOOL *stop)
+     {
+         SKSpriteNode *fly = (SKSpriteNode *)node;
+         CGRect smallerFrame = CGRectInset(fly.frame, 5, 5);
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+             NSLog(@"Collision detected");
+             _flies ++;
+             _flyLabel.text = [NSString stringWithFormat:@"Flies %d of 6", _flies];
+             [fly removeFromParent];
          }
      }];
     
@@ -786,6 +862,10 @@ typedef NS_ENUM(NSInteger, DeviceType)
             _grass.position = CGPointMake(384, 289);
             _pauseBtn.position = CGPointMake(40, 29);
             _pauseLabel.fontSize = 130;
+            _flyLabel.position = CGPointMake(680, 995);
+            _flyLabel.fontSize = 25;
+            _countDownLabel.position = CGPointMake(680, 965);
+            _countDownLabel.fontSize = 25;
             
             _frogRespawnPos = CGPointMake(384, 32);
             break;

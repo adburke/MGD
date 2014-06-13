@@ -7,7 +7,7 @@
             <key>generator</key>
             <string>TexturePacker 3.3.4 - http://www.codeandweb.com/texturepacker</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:6902e4e8518e7748dd4602fdfd441744:c3d8d8aa5ce6cf940e63acd43c7400b1:70f5251161c094417663358303df91bb$</string>
+            <string>$TexturePacker:SmartUpdate:6daba490810de8e26a79b610a5b2f3a0:c7eeaa86c194c0e95d538b5a12d7454c:70f5251161c094417663358303df91bb$</string>
         </dict>
         <key>format</key>
         <string>APPL</string>
@@ -625,6 +625,22 @@
                         <string>{29,26}</string>
                         <key>textureRect</key>
                         <string>{{1807,441},{29,26}}</string>
+                        <key>textureRotated</key>
+                        <false/>
+                    </dict>
+                    <dict>
+                        <key>aliases</key>
+                        <array/>
+                        <key>isFullyOpaque</key>
+                        <false/>
+                        <key>name</key>
+                        <string>Collection/fly.png</string>
+                        <key>spriteOffset</key>
+                        <string>{0,0}</string>
+                        <key>spriteSourceSize</key>
+                        <string>{16,16}</string>
+                        <key>textureRect</key>
+                        <string>{{1814,1},{16,16}}</string>
                         <key>textureRotated</key>
                         <false/>
                     </dict>
@@ -1274,6 +1290,22 @@
                         <string>{54,54}</string>
                         <key>textureRect</key>
                         <string>{{1601,1983},{52,52}}</string>
+                        <key>textureRotated</key>
+                        <false/>
+                    </dict>
+                    <dict>
+                        <key>aliases</key>
+                        <array/>
+                        <key>isFullyOpaque</key>
+                        <false/>
+                        <key>name</key>
+                        <string>Collection/fly@2x.png</string>
+                        <key>spriteOffset</key>
+                        <string>{0,0}</string>
+                        <key>spriteSourceSize</key>
+                        <string>{32,32}</string>
+                        <key>textureRect</key>
+                        <string>{{1688,1441},{32,32}}</string>
                         <key>textureRotated</key>
                         <false/>
                     </dict>

@@ -7,7 +7,7 @@
             <key>generator</key>
             <string>TexturePacker 3.3.4 - http://www.codeandweb.com/texturepacker</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f1d661f839fb16ccffd678e064649567:e0bcf141cd10ac3fe52f937db7545ff7:adbb14f3a0721c6db47cd54139d69b72$</string>
+            <string>$TexturePacker:SmartUpdate:b8da442b91d5c543c79bf9bf4e7ff4e6:80d22273b5f5618c97c3767e931d252a:adbb14f3a0721c6db47cd54139d69b72$</string>
         </dict>
         <key>format</key>
         <string>APPL</string>
@@ -449,6 +449,22 @@
                         <string>{56,46}</string>
                         <key>textureRect</key>
                         <string>{{4021,329},{56,46}}</string>
+                        <key>textureRotated</key>
+                        <false/>
+                    </dict>
+                    <dict>
+                        <key>aliases</key>
+                        <array/>
+                        <key>isFullyOpaque</key>
+                        <false/>
+                        <key>name</key>
+                        <string>Collection/fly@2x.png</string>
+                        <key>spriteOffset</key>
+                        <string>{0,0}</string>
+                        <key>spriteSourceSize</key>
+                        <string>{46,48}</string>
+                        <key>textureRect</key>
+                        <string>{{4021,377},{46,48}}</string>
                         <key>textureRotated</key>
                         <false/>
                     </dict>

@@ -9,6 +9,7 @@
 #import "GameOverScene.h"
 #import "MyScene.h"
 #import "MenuScene.h"
+#import <GameKit/GameKit.h>
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -24,7 +25,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
 };
 
-@implementation GameOverScene
+@implementation GameOverScene 
 {
     NSString *_sceneAtlas;
     
@@ -71,11 +72,20 @@ typedef NS_ENUM(NSInteger, DeviceType)
                 _deviceType = DeviceType_Ipad;
             }
         }
-        
+    
         if (won) {
             _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/win"]];
+            
+            SKAction *wait = [SKAction waitForDuration:5];
+            SKAction *performSelector = [SKAction performSelector:@selector(launchLeaderBoard) onTarget:self];
+            SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
+            [self runAction:sequence];
         } else {
             _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/lose"]];
+            SKAction *wait = [SKAction waitForDuration:5];
+            SKAction *performSelector = [SKAction performSelector:@selector(launchLeaderBoard) onTarget:self];
+            SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
+            [self runAction:sequence];
         }
         
         _background.name = @"background";
@@ -180,6 +190,18 @@ typedef NS_ENUM(NSInteger, DeviceType)
         default:
             break;
     }
+}
+
+- (void)launchLeaderBoard
+{
+    GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+    leaderboardViewController.gameCenterDelegate = self;
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:leaderboardViewController animated:YES completion:nil];
+}
+
+-(void) gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

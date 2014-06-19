@@ -87,6 +87,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     SKLabelNode *_livesLabel;
     SKLabelNode *_flyLabel;
     SKLabelNode *_countDownLabel;
+    SKLabelNode *_countDownLabelNumber;
     
 }
 
@@ -186,9 +187,13 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         _countDownLabel = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-CondensedBlack"];
         _countDownLabel.zPosition = 500;
-        _countDownLabel.text = @"Timer: 40";
+        _countDownLabel.text = @"Timer:";
         
-        NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn, _flyLabel, _countDownLabel];
+        _countDownLabelNumber = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-CondensedBlack"];
+        _countDownLabelNumber.zPosition = 500;
+        _countDownLabelNumber.text = @"40.000";
+        
+        NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn, _flyLabel, _countDownLabel, _countDownLabelNumber];
         [self setupScene:_deviceType];
         for (SKSpriteNode *node in nodes) {
             [self addChild:node];
@@ -378,9 +383,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
         startGamePlay = NO;
     }
     
-    int countDownInt = 40.0 -(int)(currentTime-startTime);
+    double countDownInt = 40.0 -(double)(currentTime-startTime);
     if (countDownInt > 0){ //if counting down to 0 show counter
-        _countDownLabel.text = [NSString stringWithFormat:@"Timer: %i", countDownInt];
+        _countDownLabelNumber.text = [NSString stringWithFormat:@"%.3f", countDownInt];
     } else if (gameStarted && !_gameOver) {
         _gameOver = YES;
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:FALSE];
@@ -864,9 +869,11 @@ typedef NS_ENUM(NSInteger, DeviceType)
             _pauseLabel.fontSize = 130;
             _flyLabel.position = CGPointMake(680, 995);
             _flyLabel.fontSize = 25;
-            _countDownLabel.position = CGPointMake(680, 965);
+            _countDownLabel.position = CGPointMake(650, 965);
             _countDownLabel.fontSize = 25;
-            
+            _countDownLabelNumber.position = CGPointMake(720, 965);
+            _countDownLabelNumber.fontSize = 25;
+        
             _frogRespawnPos = CGPointMake(384, 32);
             break;
             

@@ -7,8 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <GameKit/GameKit.h>
 
-@interface GameOverScene : SKScene
+@interface GameOverScene : SKScene <GKGameCenterControllerDelegate>
 
 - (id)initWithSize:(CGSize)size won:(BOOL)won;
 

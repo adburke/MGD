@@ -12,6 +12,9 @@
 #import "GameOverScene.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import <GameKit/GameKit.h>
+
+#define SCOREBOARD_ID @"frogglesFinishTime1"
 
 #define IS_WIDESCREEN ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
@@ -191,7 +194,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         _countDownLabelNumber = [SKLabelNode labelNodeWithFontNamed:@"HelveticaNeue-CondensedBlack"];
         _countDownLabelNumber.zPosition = 500;
-        _countDownLabelNumber.text = @"40.000";
+        _countDownLabelNumber.text = @"60.00";
         
         NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn, _flyLabel, _countDownLabel, _countDownLabelNumber];
         [self setupScene:_deviceType];
@@ -364,6 +367,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 - (void)update:(NSTimeInterval)currentTime
 {
+    
     if (_lives <= 0 && !_gameOver) {
         _gameOver = YES;
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:FALSE];
@@ -371,6 +375,11 @@ typedef NS_ENUM(NSInteger, DeviceType)
         [self.view presentScene:gameOverScene transition:transition];
     } else if (_lives > 0 && _win && !_gameOver){
         _gameOver = YES;
+        
+        int64_t score = (60.0 - _countDownLabelNumber.text.doubleValue)*100;
+        
+        [self reportScore:score];
+        
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:TRUE];
         SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
         [self.view presentScene:gameOverScene transition:transition];
@@ -383,9 +392,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
         startGamePlay = NO;
     }
     
-    double countDownInt = 40.0 -(double)(currentTime-startTime);
+    double countDownInt = 60.0 -(double)(currentTime-startTime);
     if (countDownInt > 0){ //if counting down to 0 show counter
-        _countDownLabelNumber.text = [NSString stringWithFormat:@"%.3f", countDownInt];
+        _countDownLabelNumber.text = [NSString stringWithFormat:@"%.2f", countDownInt];
     } else if (gameStarted && !_gameOver) {
         _gameOver = YES;
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:FALSE];
@@ -393,6 +402,18 @@ typedef NS_ENUM(NSInteger, DeviceType)
         [self.view presentScene:gameOverScene transition:transition];
     }
     
+}
+
+- (void) reportScore: (int64_t) score
+{
+    GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: SCOREBOARD_ID];
+    scoreReporter.value = score;
+    scoreReporter.context = 0;
+    
+    NSArray *scores = @[scoreReporter];
+    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
+        //Do something interesting here.
+    }];
 }
 
 - (void)didEvaluateActions {

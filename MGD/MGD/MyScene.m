@@ -13,6 +13,9 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import <GameKit/GameKit.h>
+#import "GCSingleton.h"
+#import "LocalScoreBoard.h"
+#import <SystemConfiguration/SystemConfiguration.h>
 
 #define SCOREBOARD_ID @"frogglesFinishTime1"
 
@@ -376,9 +379,14 @@ typedef NS_ENUM(NSInteger, DeviceType)
     } else if (_lives > 0 && _win && !_gameOver){
         _gameOver = YES;
         
-        int64_t score = (60.0 - _countDownLabelNumber.text.doubleValue)*100;
+        BOOL status = [self currentNetworkStatus];
         
-        [self reportScore:score];
+        if ([[GCSingleton sharedContext] userAuthenticated] && status) {
+            int64_t score = (60.0 - _countDownLabelNumber.text.doubleValue)*100;
+            [self reportScore:score];
+        } else {
+            [[LocalScoreBoard sharedContext] updateScoreBoard:(60.0 - _countDownLabelNumber.text.doubleValue)];
+        }
         
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:TRUE];
         SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
@@ -901,6 +909,20 @@ typedef NS_ENUM(NSInteger, DeviceType)
         default:
             break;
     }
+}
+
+- (BOOL)currentNetworkStatus {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    BOOL connected;
+    BOOL isConnected;
+    const char *host = "www.apple.com";
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host);
+    SCNetworkReachabilityFlags flags;
+    connected = SCNetworkReachabilityGetFlags(reachability, &flags);
+    isConnected = NO;
+    isConnected = connected && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+    CFRelease(reachability);
+    return isConnected;
 }
 
 

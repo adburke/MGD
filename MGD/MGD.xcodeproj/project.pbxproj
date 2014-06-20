@@ -40,6 +40,9 @@
 		9663276D1952472700A33673 /* GCSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9663276C1952472700A33673 /* GCSingleton.m */; };
 		9699ACFF191C7F9F00E199B4 /* frogJump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFD191C7F9F00E199B4 /* frogJump.wav */; };
 		9699AD00191C7F9F00E199B4 /* waterSplash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9699ACFE191C7F9F00E199B4 /* waterSplash.wav */; };
+		96D3AAC719539D690092B06D /* LocalScoreBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D3AAC619539D690092B06D /* LocalScoreBoard.m */; };
+		96D3AACC1953B5B10092B06D /* LocalScoreBoardTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D3AACB1953B5B10092B06D /* LocalScoreBoardTableVC.m */; };
+		96D3AACE1953C2510092B06D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D3AACD1953C2510092B06D /* Social.framework */; };
 		96E18D7A1937F43100A5F47A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96E18D791937F43100A5F47A /* Images.xcassets */; };
 		96E18D811937F52A00A5F47A /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E18D7F1937F52A00A5F47A /* splash.png */; };
 		96E18D821937F52A00A5F47A /* splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E18D801937F52A00A5F47A /* splash@2x.png */; };
@@ -109,6 +112,11 @@
 		9663276C1952472700A33673 /* GCSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCSingleton.m; sourceTree = "<group>"; };
 		9699ACFD191C7F9F00E199B4 /* frogJump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = frogJump.wav; sourceTree = "<group>"; };
 		9699ACFE191C7F9F00E199B4 /* waterSplash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterSplash.wav; sourceTree = "<group>"; };
+		96D3AAC519539D690092B06D /* LocalScoreBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalScoreBoard.h; path = ../LocalScoreBoard.h; sourceTree = "<group>"; };
+		96D3AAC619539D690092B06D /* LocalScoreBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalScoreBoard.m; path = ../LocalScoreBoard.m; sourceTree = "<group>"; };
+		96D3AACA1953B5B10092B06D /* LocalScoreBoardTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalScoreBoardTableVC.h; sourceTree = "<group>"; };
+		96D3AACB1953B5B10092B06D /* LocalScoreBoardTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalScoreBoardTableVC.m; sourceTree = "<group>"; };
+		96D3AACD1953C2510092B06D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		96E18D791937F43100A5F47A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96E18D7F1937F52A00A5F47A /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		96E18D801937F52A00A5F47A /* splash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash@2x.png"; sourceTree = "<group>"; };
@@ -134,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96D3AACE1953C2510092B06D /* Social.framework in Frameworks */,
 				96464176191A7E5F0008A0CA /* CoreGraphics.framework in Frameworks */,
 				96464178191A7E5F0008A0CA /* UIKit.framework in Frameworks */,
 				9646417A191A7E5F0008A0CA /* SpriteKit.framework in Frameworks */,
@@ -177,6 +186,7 @@
 		96464172191A7E5F0008A0CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96D3AACD1953C2510092B06D /* Social.framework */,
 				966327691952351700A33673 /* GameKit.framework */,
 				96464173191A7E5F0008A0CA /* Foundation.framework */,
 				96464175191A7E5F0008A0CA /* CoreGraphics.framework */,
@@ -203,6 +213,8 @@
 				96E18D961937FF1700A5F47A /* StartScene.m */,
 				96062D70192D88440089E3BB /* GameOverScene.h */,
 				96062D71192D88440089E3BB /* GameOverScene.m */,
+				96D3AACA1953B5B10092B06D /* LocalScoreBoardTableVC.h */,
+				96D3AACB1953B5B10092B06D /* LocalScoreBoardTableVC.m */,
 				96E18D9F1938093C00A5F47A /* MenuScene.h */,
 				96E18DA01938093C00A5F47A /* MenuScene.m */,
 				96E18DB71938131F00A5F47A /* CreditsScene.h */,
@@ -211,6 +223,8 @@
 				96E18DBB1938132800A5F47A /* HelpScene.m */,
 				9663276B1952472700A33673 /* GCSingleton.h */,
 				9663276C1952472700A33673 /* GCSingleton.m */,
+				96D3AAC519539D690092B06D /* LocalScoreBoard.h */,
+				96D3AAC619539D690092B06D /* LocalScoreBoard.m */,
 				9646417C191A7E5F0008A0CA /* Supporting Files */,
 				9635FB281921D28D008C9FF8 /* SKTUtils.h */,
 				96E18D791937F43100A5F47A /* Images.xcassets */,
@@ -441,8 +455,10 @@
 				96062D72192D88440089E3BB /* GameOverScene.m in Sources */,
 				96E18DBC1938132800A5F47A /* HelpScene.m in Sources */,
 				96E18D971937FF1700A5F47A /* StartScene.m in Sources */,
+				96D3AACC1953B5B10092B06D /* LocalScoreBoardTableVC.m in Sources */,
 				9646418F191A7E5F0008A0CA /* MyScene.m in Sources */,
 				96E18DA11938093C00A5F47A /* MenuScene.m in Sources */,
+				96D3AAC719539D690092B06D /* LocalScoreBoard.m in Sources */,
 				9646418C191A7E5F0008A0CA /* ViewController.m in Sources */,
 				96E18DB91938131F00A5F47A /* CreditsScene.m in Sources */,
 				96464186191A7E5F0008A0CA /* AppDelegate.m in Sources */,

@@ -10,9 +10,12 @@
 #import "MyScene.h"
 #import "MenuScene.h"
 #import <GameKit/GameKit.h>
+#import "GCSingleton.h"
+#import "LocalScoreBoardTableVC.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 
 
 #define IS_WIDESCREEN ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
@@ -76,16 +79,13 @@ typedef NS_ENUM(NSInteger, DeviceType)
         if (won) {
             _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/win"]];
             
-            SKAction *wait = [SKAction waitForDuration:5];
+            SKAction *wait = [SKAction waitForDuration:1];
             SKAction *performSelector = [SKAction performSelector:@selector(launchLeaderBoard) onTarget:self];
             SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
             [self runAction:sequence];
         } else {
+        
             _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/lose"]];
-            SKAction *wait = [SKAction waitForDuration:5];
-            SKAction *performSelector = [SKAction performSelector:@selector(launchLeaderBoard) onTarget:self];
-            SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
-            [self runAction:sequence];
         }
         
         _background.name = @"background";
@@ -194,14 +194,48 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 - (void)launchLeaderBoard
 {
-    GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
-    leaderboardViewController.gameCenterDelegate = self;
-    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:leaderboardViewController animated:YES completion:nil];
+    BOOL status = [self currentNetworkStatus];
+    
+    if ([[GCSingleton sharedContext] userAuthenticated] && status) {
+        GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+        leaderboardViewController.gameCenterDelegate = self;
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:leaderboardViewController animated:YES completion:nil];
+    } else {
+        LocalScoreBoardTableVC *scoreTable = [[LocalScoreBoardTableVC alloc] init];
+//        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:scoreTable];
+//        navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+//        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+//        navController.title = @"Local Score Board";
+//        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(launchFacebookPost)];
+//        
+//        [navController.navigationItem setRightBarButtonItem:button];
+        
+        scoreTable.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        scoreTable.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:scoreTable animated:YES completion:nil];
+    }
+    
 }
 
 -(void) gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
 {
     [[[[[UIApplication sharedApplication] delegate] window] rootViewController] dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (BOOL)currentNetworkStatus {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    BOOL connected;
+    BOOL isConnected;
+    const char *host = "www.apple.com";
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host);
+    SCNetworkReachabilityFlags flags;
+    connected = SCNetworkReachabilityGetFlags(reachability, &flags);
+    isConnected = NO;
+    isConnected = connected && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+    CFRelease(reachability);
+    return isConnected;
+}
+
 
 @end

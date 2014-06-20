@@ -43,7 +43,6 @@
 }
 
 - (void)authenticationChanged {
-    
     if ([GKLocalPlayer localPlayer].isAuthenticated && !_userAuthenticated) {
         NSLog(@"Authentication changed: player authenticated.");
         _userAuthenticated = TRUE;

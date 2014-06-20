@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSArray *scores;
 @property (nonatomic, strong) UITapGestureRecognizer *recognizer;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 @end
 
@@ -54,6 +55,10 @@
 
 - (void)handleTapBehind:(UITapGestureRecognizer *)sender
 {
+    if (self.actionSheet.isVisible){
+        return;
+    }
+    
     if (sender.state == UIGestureRecognizerStateEnded)
     {
         CGPoint location = [sender locationInView:nil]; //Passing nil gives us coordinates in the window
@@ -166,9 +171,9 @@
 
 - (void)filterTable
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Filter Ascending" destructiveButtonTitle:@"Filter Descending" otherButtonTitles:@"Filter Ascending", nil];
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Filter Ascending" destructiveButtonTitle:@"Filter Descending" otherButtonTitles:@"Filter Ascending", nil];
     
-    [actionSheet showInView:self.view];
+    [self.actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

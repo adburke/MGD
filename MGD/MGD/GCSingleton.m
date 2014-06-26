@@ -27,9 +27,13 @@
     if ((self = [super init])) {
         // Check for GC availablility
         _gameCenterAvailable = [self isGameCenterAvailable];
-        if (_gameCenterAvailable) {
+        if (_gameCenterAvailable)
+        {
             
             self.localPlayer = [GKLocalPlayer localPlayer];
+            
+            self.achievementsDictionary = [[NSMutableDictionary alloc] init];
+            self.achievementDescrDictionary = [[NSMutableDictionary alloc] init];
             
             // Register notification for authentication state changes
             NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -43,10 +47,12 @@
 }
 
 - (void)authenticationChanged {
-    if ([GKLocalPlayer localPlayer].isAuthenticated && !_userAuthenticated) {
+    if ([GKLocalPlayer localPlayer].isAuthenticated && !_userAuthenticated)
+    {
         NSLog(@"Authentication changed: player authenticated.");
         _userAuthenticated = TRUE;
-    } else if (![GKLocalPlayer localPlayer].isAuthenticated && _userAuthenticated) {
+    } else if (![GKLocalPlayer localPlayer].isAuthenticated && _userAuthenticated)
+    {
         NSLog(@"Authentication changed: player not authenticated");
         _userAuthenticated = FALSE;
     }
@@ -88,6 +94,8 @@
         {
             //authenticatedPlayer: is an example method name. Create your own method that is called after the loacal player is authenticated.
             [weakSelf authenticatedPlayer: weakPlayer];
+            [weakSelf loadAchievements];
+            [weakSelf reportAchievementInfo];
         }
         else
         {
@@ -110,6 +118,67 @@
 {
     
 }
+
+#pragma Achievement Section
+
+- (void)loadAchievements
+{
+    [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error)
+     {
+         if (error == nil)
+         {
+             for (GKAchievement* achievement in achievements)
+                 [self.achievementsDictionary setObject: achievement forKey: achievement.identifier];
+         }
+     }];
+}
+
+- (void)reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent
+{
+    GKAchievement *achievement = [self getAchievementForIdentifier:identifier];
+    if (achievement)
+    {
+        achievement.percentComplete = percent;
+        [achievement reportAchievementWithCompletionHandler:^(NSError *error)
+         {
+             if (error != nil)
+             {
+                 // Log the error.
+             }
+         }];
+    }
+}
+
+- (GKAchievement*)getAchievementForIdentifier: (NSString*) identifier
+{
+    GKAchievement *achievement = [self.achievementsDictionary objectForKey:identifier];
+    if (achievement == nil)
+    {
+        achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
+        [self.achievementsDictionary setObject:achievement forKey:achievement.identifier];
+    }
+    return achievement;
+}
+
+- (void)reportAchievementInfo
+{
+    [GKAchievementDescription loadAchievementDescriptionsWithCompletionHandler:^(NSArray *descriptions, NSError *error) {
+        if (error != nil)
+        {
+            NSLog(@"Error in loading achievement descriptions: %@", error);
+        }
+        if (descriptions != nil)
+        {
+            for (GKAchievementDescription* descr in descriptions)
+            {
+                [self.achievementDescrDictionary setObject: descr forKey: descr.identifier];
+            }
+            NSLog(@"achievement descriptions loaded");
+        }
+    }];
+}
+
+
 
 
 @end

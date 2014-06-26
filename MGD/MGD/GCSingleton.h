@@ -14,6 +14,8 @@
 @property (assign, readonly) BOOL userAuthenticated;
 @property (assign, readonly) BOOL gameCenterAvailable;
 @property (nonatomic, strong) GKLocalPlayer *localPlayer;
+@property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
+@property (nonatomic, strong) NSMutableDictionary *achievementDescrDictionary;
 
 + (GCSingleton *)sharedContext;
 - (void)authenticateLocalUser;

@@ -97,8 +97,10 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
 }
 
--(id)initWithSize:(CGSize)size {    
-    if (self = [super initWithSize:size]) {
+-(id)initWithSize:(CGSize)size
+{
+    if (self = [super initWithSize:size])
+    {
         
         _lives = 5;
         _gameOver = NO;
@@ -114,35 +116,51 @@ typedef NS_ENUM(NSInteger, DeviceType)
         NSString *platform = [NSString stringWithUTF8String:machine];
         free(machine);
 
-        if ([platform hasPrefix:@"iPad3,"]){
+        if ([platform hasPrefix:@"iPad3,"])
+        {
             _sceneAtlas = @"Ipad";
             _frogMoveDistance = 64;
             _deviceType = DeviceType_Ipad;
-        } else if ([platform hasPrefix:@"iPhone5,"]) {
+        }
+        else if ([platform hasPrefix:@"iPhone5,"])
+        {
             _sceneAtlas = @"Iphone5";
             _frogMoveDistance = 32;
             _deviceType = DeviceType_Iphone4in;
-        } else if ([platform hasPrefix:@"iPad2,"]) {
+        }
+        else if ([platform hasPrefix:@"iPad2,"])
+        {
             _sceneAtlas = @"Ipad";
             _frogMoveDistance = 64;
             _deviceType = DeviceType_Ipad;
-        } else if ([platform isEqualToString:@"x86_64"]) {
+        }
+        else if ([platform isEqualToString:@"x86_64"])
+        {
             // for simulator
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                if (IS_WIDESCREEN) {
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                if (IS_WIDESCREEN)
+                {
                     _sceneAtlas = @"Iphone5";
                     _frogMoveDistance = 32;
                     _deviceType = DeviceType_Iphone4in;
-                } else {
+                }
+                else
+                {
                     _sceneAtlas = @"Iphone";
                     _deviceType = DeviceType_Iphone3in;
-                    if ([[UIScreen mainScreen] bounds].size.height <= 480.0f){
+                    if ([[UIScreen mainScreen] bounds].size.height <= 480.0f)
+                    {
                         _frogMoveDistance = 32;
-                    } else {
+                    }
+                    else
+                    {
                         _frogMoveDistance = 32;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 _sceneAtlas = @"Ipad";
                 _frogMoveDistance = 64;
                 _deviceType = DeviceType_Ipad;
@@ -201,19 +219,22 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         NSArray *nodes = @[_livesLabel, _frog, _water, _dirtStart, _dirtFinish, _stone, _grass, _pauseBtn, _flyLabel, _countDownLabel, _countDownLabelNumber];
         [self setupScene:_deviceType];
-        for (SKSpriteNode *node in nodes) {
+        for (SKSpriteNode *node in nodes)
+        {
             [self addChild:node];
         }
         
         // Frog forward animation
         NSMutableArray *texturesForward = [NSMutableArray arrayWithCapacity:10];
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 4; i++)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frog%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Forward/%@", textureName]];
             [texturesForward addObject:texture];
         }
-        for (int i = 2; i > 0; i--) {
+        for (int i = 2; i > 0; i--)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frog%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Forward/%@", textureName]];
@@ -223,13 +244,15 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         // Frog reverse animation
         NSMutableArray *texturesBackward = [NSMutableArray arrayWithCapacity:10];
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 4; i++)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frogB%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Backward/%@", textureName]];
             [texturesBackward addObject:texture];
         }
-        for (int i = 2; i > 0; i--) {
+        for (int i = 2; i > 0; i--)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frogB%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Backward/%@", textureName]];
@@ -239,13 +262,15 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         // Frog Right animation
         NSMutableArray *texturesRight = [NSMutableArray arrayWithCapacity:10];
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 4; i++)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frogR%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Right/%@", textureName]];
             [texturesRight addObject:texture];
         }
-        for (int i = 2; i > 0; i--) {
+        for (int i = 2; i > 0; i--)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frogR%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Right/%@", textureName]];
@@ -255,13 +280,15 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         // Frog Left animation
         NSMutableArray *texturesLeft = [NSMutableArray arrayWithCapacity:10];
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 4; i++)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frogL%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Left/%@", textureName]];
             [texturesLeft addObject:texture];
         }
-        for (int i = 2; i > 0; i--) {
+        for (int i = 2; i > 0; i--)
+        {
             NSString *textureName = [NSString stringWithFormat:@"frogL%d", i];
             SKTexture *texture = [[SKTextureAtlas atlasNamed:_sceneAtlas]
                                   textureNamed:[NSString stringWithFormat:@"Frog Left/%@", textureName]];
@@ -337,11 +364,14 @@ typedef NS_ENUM(NSInteger, DeviceType)
     return self;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     /* Called when a touch begins */
     
-    for (UITouch *touch in touches) {
-        if  (!gameStarted) {
+    for (UITouch *touch in touches)
+    {
+        if  (!gameStarted)
+        {
             startGamePlay = YES;
         }
     }
@@ -350,15 +380,19 @@ typedef NS_ENUM(NSInteger, DeviceType)
     CGPoint location = [touch locationInNode:self.scene];
     SKNode *node = [self nodeAtPoint:location];
     
-    if ([node.name isEqualToString:@"pauseBtn"]) {
+    if ([node.name isEqualToString:@"pauseBtn"])
+    {
         NSLog(@"Pause Btn selected");
         [self showLabel];
         return;
         //[self pause];
-    } else if (self.view.paused) {
+    }
+    else if (self.view.paused)
+    {
         [self showLabel];
         return;
     }
+    
     Side side = [self getSideSelected:location];
     NSLog(@"Side selected = %d", side);
     _isMoving = YES;
@@ -371,20 +405,26 @@ typedef NS_ENUM(NSInteger, DeviceType)
 - (void)update:(NSTimeInterval)currentTime
 {
     
-    if (_lives <= 0 && !_gameOver) {
+    if (_lives <= 0 && !_gameOver)
+    {
         _gameOver = YES;
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:FALSE];
         SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
         [self.view presentScene:gameOverScene transition:transition];
-    } else if (_lives > 0 && _win && !_gameOver){
+    }
+    else if (_lives > 0 && _win && !_gameOver)
+    {
         _gameOver = YES;
         
         BOOL status = [self currentNetworkStatus];
         
-        if ([[GCSingleton sharedContext] userAuthenticated] && status) {
+        if ([[GCSingleton sharedContext] userAuthenticated] && status)
+        {
             int64_t score = (60.0 - _countDownLabelNumber.text.doubleValue)*100;
             [self reportScore:score];
-        } else {
+        }
+        else
+        {
             [[LocalScoreBoard sharedContext] updateScoreBoard:(60.0 - _countDownLabelNumber.text.doubleValue)];
         }
         
@@ -394,16 +434,20 @@ typedef NS_ENUM(NSInteger, DeviceType)
     }
     
     //reset counter if starting
-    if (startGamePlay){
+    if (startGamePlay)
+    {
         startTime = currentTime;
         gameStarted = YES;
         startGamePlay = NO;
     }
     
     double countDownInt = 60.0 -(double)(currentTime-startTime);
-    if (countDownInt > 0){ //if counting down to 0 show counter
+    if (countDownInt > 0) //if counting down to 0 show counter
+    {
         _countDownLabelNumber.text = [NSString stringWithFormat:@"%.2f", countDownInt];
-    } else if (gameStarted && !_gameOver) {
+    }
+    else if (gameStarted && !_gameOver)
+    {
         _gameOver = YES;
         SKScene * gameOverScene = [[GameOverScene alloc] initWithSize:self.size won:FALSE];
         SKTransition *transition = [SKTransition flipHorizontalWithDuration:0.5];
@@ -419,12 +463,14 @@ typedef NS_ENUM(NSInteger, DeviceType)
     scoreReporter.context = 0;
     
     NSArray *scores = @[scoreReporter];
-    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
+    [GKScore reportScores:scores withCompletionHandler:^(NSError *error)
+    {
         //Do something interesting here.
     }];
 }
 
-- (void)didEvaluateActions {
+- (void)didEvaluateActions
+{
     [self checkCollisions];
 }
 
@@ -432,41 +478,55 @@ typedef NS_ENUM(NSInteger, DeviceType)
 {
     CGPoint diff = CGPointSubtract(location,_frog.position);
     CGFloat angle = CGPointToAngle(diff);
-    if (angle > -M_PI_4 && angle <= M_PI_4) {
+    if (angle > -M_PI_4 && angle <= M_PI_4)
+    {
         return SideRight;
-    } else if (angle > M_PI_4 && angle <= 3.0f * M_PI_4) {
+    }
+    else if (angle > M_PI_4 && angle <= 3.0f * M_PI_4)
+    {
         return SideTop;
-    } else if (angle <= -M_PI_4 && angle > -3.0f * M_PI_4) {
+    }
+    else if (angle <= -M_PI_4 && angle > -3.0f * M_PI_4)
+    {
         return SideBottom;
-    } else {
+    }
+    else
+    {
         return SideLeft;
     }
 }
 
 -(void)moveFrogInDirection:(Side)side
 {
-    if (side == 1) {
+    if (side == 1)
+    {
         CGVector negDelta = CGVectorMake(0,_frogMoveDistance);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationForward]];
         SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
         SKAction *sequence = [SKAction sequence:@[group, performSelector]];
         [_frog runAction:sequence];
-    } else if (side == 0) {
+    }
+    else if (side == 0)
+    {
         CGVector negDelta = CGVectorMake(_frogMoveDistance,0);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationRight]];
         SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
         SKAction *sequence = [SKAction sequence:@[group, performSelector]];
         [_frog runAction:sequence];
-    } else if (side == 2) {
+    }
+    else if (side == 2)
+    {
         CGVector negDelta = CGVectorMake(-_frogMoveDistance,0);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationLeft]];
         SKAction *performSelector = [SKAction performSelector:@selector(checkMovement) onTarget:self];
         SKAction *sequence = [SKAction sequence:@[group, performSelector]];
         [_frog runAction:sequence];
-    } else if (side == 3) {
+    }
+    else if (side == 3)
+    {
         CGVector negDelta = CGVectorMake(0,-_frogMoveDistance);
         SKAction *actionMove = [SKAction moveBy:negDelta duration:0.1];
         SKAction *group = [SKAction group:@[actionMove, _frogAnimationBackward]];
@@ -488,7 +548,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
     _isFloating = NO;
     [self checkCollisions];
     if (_frog.position.y > (_dirtStart.size.height + _grass.size.height + _stone.size.height) &&
-        _frog.position.y < (self.scene.size.height - 64) && !_isFloating) {
+        _frog.position.y < (self.scene.size.height - 64) && !_isFloating)
+    {
         NSLog(@"DIED IN WATER");
         [[self scene] runAction:_waterSound];
         _lives--;
@@ -509,7 +570,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 - (void)spawnFlys:(int)num
 {
-    for (int i = 0, j = num; i<j; i++) {
+    for (int i = 0, j = num; i<j; i++)
+    {
         SKSpriteNode *fly = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Collection/fly"]];
         fly.name = @"fly";
         fly.zPosition = 500;
@@ -555,11 +617,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
             SKSpriteNode *lily = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Objects/lily"]];
             lily.name = @"lily";
             CGPoint lilyScenePos;
-            if ([_sceneAtlas  isEqual: @"Ipad"]) {
+            if ([_sceneAtlas  isEqual: @"Ipad"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+32);
-            } else if ([_sceneAtlas  isEqual: @"Iphone"]){
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-32-_water.frame.size.height+16);
-            } else if ([_sceneAtlas  isEqual: @"Iphone5"]) {
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone5"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-32-_water.frame.size.height+16);
             }
             lily.position = [self convertPoint:lilyScenePos toNode:self];
@@ -574,11 +641,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
             SKSpriteNode *lily = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Objects/lily"]];
             lily.name = @"lily";
             CGPoint lilyScenePos;
-            if ([_sceneAtlas  isEqual: @"Ipad"]) {
+            if ([_sceneAtlas  isEqual: @"Ipad"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+2*64+32+5);
-            } else if ([_sceneAtlas  isEqual: @"Iphone"]){
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-32-_water.frame.size.height+2*32+16+1);
-            } else if ([_sceneAtlas  isEqual: @"Iphone5"]) {
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone5"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-32-_water.frame.size.height+2*32+16+7);
             }
             lily.position = [self convertPoint:lilyScenePos toNode:self];
@@ -593,11 +665,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
             SKSpriteNode *lily = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Objects/lily"]];
             lily.name = @"lily";
             CGPoint lilyScenePos;
-            if ([_sceneAtlas  isEqual: @"Ipad"]) {
+            if ([_sceneAtlas  isEqual: @"Ipad"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-64-_water.frame.size.height+4*64+32+5);
-            } else if ([_sceneAtlas  isEqual: @"Iphone"]){
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-32-_water.frame.size.height+4*32+16+1);
-            } else if ([_sceneAtlas  isEqual: @"Iphone5"]) {
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone5"])
+            {
                 lilyScenePos = CGPointMake(self.size.width + lily.size.width/2,self.frame.size.height-32-_water.frame.size.height+4*32+16+10);
             }
             lily.position = [self convertPoint:lilyScenePos toNode:self];
@@ -622,11 +699,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
             log.name = @"log";
             //log.yScale = 0.8;
             CGPoint logScenePos;
-            if ([_sceneAtlas  isEqual: @"Ipad"]) {
+            if ([_sceneAtlas  isEqual: @"Ipad"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-64-_water.frame.size.height+64+32+5);
-            } else if ([_sceneAtlas  isEqual: @"Iphone"]){
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-32-_water.frame.size.height+32+16+1);
-            } else if ([_sceneAtlas  isEqual: @"Iphone5"]) {
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone5"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-32-_water.frame.size.height+32+16+5);
             }
             log.position = [self convertPoint:logScenePos toNode:self];
@@ -642,11 +724,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
             SKSpriteNode *log = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Objects/log"]];
             log.name = @"log";
             CGPoint logScenePos;
-            if ([_sceneAtlas  isEqual: @"Ipad"]) {
+            if ([_sceneAtlas  isEqual: @"Ipad"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-64-_water.frame.size.height+3*64+32+5);
-            } else if ([_sceneAtlas  isEqual: @"Iphone"]){
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-32-_water.frame.size.height+3*32+16+1);
-            } else if ([_sceneAtlas  isEqual: @"Iphone5"]) {
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone5"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-32-_water.frame.size.height+3*32+16+9);
             }
             log.position = [self convertPoint:logScenePos toNode:self];
@@ -663,11 +750,16 @@ typedef NS_ENUM(NSInteger, DeviceType)
             log.name = @"log";
             //log.yScale = 0.7;
             CGPoint logScenePos;
-            if ([_sceneAtlas  isEqual: @"Ipad"]) {
+            if ([_sceneAtlas  isEqual: @"Ipad"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-64-_water.frame.size.height+5*64+32+5);
-            } else if ([_sceneAtlas  isEqual: @"Iphone"]){
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-32-_water.frame.size.height+5*32+16+1);
-            } else if ([_sceneAtlas  isEqual: @"Iphone5"]) {
+            }
+            else if ([_sceneAtlas  isEqual: @"Iphone5"])
+            {
                 logScenePos = CGPointMake(0 - log.size.width/2,self.frame.size.height-32-_water.frame.size.height+5*32+16+13);
             }
             log.position = [self convertPoint:logScenePos toNode:self];
@@ -692,9 +784,11 @@ typedef NS_ENUM(NSInteger, DeviceType)
      {
          SKSpriteNode *finish = (SKSpriteNode *)node;
          CGRect smallerFrame = CGRectInset(finish.frame, 0, 15);
-         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame))
+         {
              NSLog(@"Collision detected");
-             if (_flies == 6) {
+             if (_flies == 6)
+             {
                  SKAction *wait = [SKAction waitForDuration:0.4];
                  SKAction *performSelector = [SKAction performSelector:@selector(winGame) onTarget:self];
                  SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
@@ -709,7 +803,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
      {
          SKSpriteNode *snail = (SKSpriteNode *)node;
          CGRect smallerFrame = CGRectInset(snail.frame, 10, 10);
-         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame))
+         {
              NSLog(@"Collision detected");
              [[self scene] runAction:[SKAction playSoundFileNamed:@"frogGroan.wav" waitForCompletion:YES]];
              _lives--;
@@ -733,7 +828,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
      {
          SKSpriteNode *fly = (SKSpriteNode *)node;
          CGRect smallerFrame = CGRectInset(fly.frame, 5, 5);
-         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame))
+         {
              NSLog(@"Collision detected");
              _flies ++;
              _flyLabel.text = [NSString stringWithFormat:@"Flies %d of 6", _flies];
@@ -747,7 +843,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
      {
          SKSpriteNode *lily = (SKSpriteNode *)node;
          CGRect smallerFrame = CGRectInset(lily.frame, 10, 10);
-         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame))
+         {
              NSLog(@"Collision detected");
              _isFloating = YES;
              [self frogFloat:lily];
@@ -759,7 +856,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
      {
          SKSpriteNode *log = (SKSpriteNode *)node;
          CGRect smallerFrame = CGRectInset(log.frame, 10, 10);
-         if (CGRectIntersectsRect(smallerFrame, _frog.frame)) {
+         if (CGRectIntersectsRect(smallerFrame, _frog.frame))
+         {
              NSLog(@"Collision detected");
              _isFloating = YES;
              [self frogFloat:log];
@@ -788,9 +886,11 @@ typedef NS_ENUM(NSInteger, DeviceType)
 - (void)frogFloat:(SKSpriteNode*)node
 {
     SKAction *actionMove;
-    if ([node.name  isEqual: @"lily"]) {
+    if ([node.name  isEqual: @"lily"])
+    {
         actionMove = [SKAction moveTo:CGPointMake(node.position.x-15,node.position.y) duration:0.1];
-    } else if ([node.name  isEqual: @"log"]){
+    }
+    else if ([node.name  isEqual: @"log"]){
         actionMove = [SKAction moveTo:CGPointMake(node.position.x,node.position.y) duration:0.1];
     }
     
@@ -820,10 +920,13 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 - (void)showLabel
 {
-    if (self.view.paused) {
+    if (self.view.paused)
+    {
         [_pauseLabel removeFromParent];
         [self pauseGame];
-    } else {
+    }
+    else
+    {
         [self addChild:_pauseLabel];
         [self runAction:[SKAction waitForDuration:0.1] completion:^{
             [self pauseGame];
@@ -834,9 +937,12 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 - (void)pauseGame
 {
-    if (self.view.paused) {
+    if (self.view.paused)
+    {
         self.view.paused = NO;
-    } else {
+    }
+    else
+    {
         self.view.paused = YES;
     }
     
@@ -911,7 +1017,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
     }
 }
 
-- (BOOL)currentNetworkStatus {
+- (BOOL)currentNetworkStatus
+{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     BOOL connected;
     BOOL isConnected;

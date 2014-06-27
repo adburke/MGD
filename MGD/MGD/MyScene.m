@@ -85,6 +85,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
     NSMutableArray *_flySpawnPoints;
     
+    GCSingleton *_gcSingleton;
+    
     CGPoint _frogRespawnPos;
     
     NSString *_sceneAtlas;
@@ -101,6 +103,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
 {
     if (self = [super initWithSize:size])
     {
+        
+        _gcSingleton = [[GCSingleton sharedContext] init];
         
         _lives = 5;
         _gameOver = NO;
@@ -420,6 +424,69 @@ typedef NS_ENUM(NSInteger, DeviceType)
         
         if ([[GCSingleton sharedContext] userAuthenticated] && status)
         {
+            
+            // Check Achievement Status
+            if (![_gcSingleton.achievementsDictionary objectForKey:@"levelCompleted"]) {
+                //[_gcSingleton reportAchievementIdentifier:@"levelCompleted" percentComplete:100.0];
+                
+                GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"levelCompleted"];
+                achievement.percentComplete = 100.0;
+                achievement.showsCompletionBanner = YES;
+                
+                NSArray *achievementArray = @[achievement];
+                
+                [_gcSingleton reportAchievements:achievementArray];
+            }
+            
+            if (_lives == 5) {
+                if (![_gcSingleton.achievementsDictionary objectForKey:@"flawlessFinish"])
+                {
+                    //[_gcSingleton reportAchievementIdentifier:@"flawlessFinish" percentComplete:100.0];
+                    //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:33.0];
+                    
+                    GKAchievement *achievement1 = [[GKAchievement alloc] initWithIdentifier: @"flawlessFinish"];
+                    GKAchievement *achievement2 = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
+                    achievement1.percentComplete = 100.0;
+                    achievement1.showsCompletionBanner = YES;
+                    
+                    achievement2.percentComplete = 33.0;
+                    
+                    NSArray *achievementArray = @[achievement1,achievement2];
+                    
+                    [_gcSingleton reportAchievements:achievementArray];
+                    
+                }
+                else
+                {
+                    GKAchievement *flawlessMaster = [_gcSingleton.achievementsDictionary objectForKey:@"flawlessMaster"];
+                    if (flawlessMaster.percentComplete < 40.0) {
+                        //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:66];
+                        
+                        GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
+                        achievement.percentComplete = 66.0;
+                        
+                        NSArray *achievementArray = @[achievement];
+                        
+                        [_gcSingleton reportAchievements:achievementArray];
+                    }
+                    else if (flawlessMaster.percentComplete > 40 && flawlessMaster.percentComplete < 70)
+                    {
+                        //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:100.0];
+                        
+                        GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
+                        achievement.percentComplete = 100.0;
+                        achievement.showsCompletionBanner = YES;
+                        
+                        NSArray *achievementArray = @[achievement];
+                        
+                        [_gcSingleton reportAchievements:achievementArray];
+                    }
+                }
+                
+                
+            }
+            
+            
             int64_t score = (60.0 - _countDownLabelNumber.text.doubleValue)*100;
             [self reportScore:score];
         }
@@ -551,6 +618,21 @@ typedef NS_ENUM(NSInteger, DeviceType)
         _frog.position.y < (self.scene.size.height - 64) && !_isFloating)
     {
         NSLog(@"DIED IN WATER");
+        
+        // Check Achievement Status
+        if (![_gcSingleton.achievementsDictionary objectForKey:@"sleepWithFishes"])
+        {
+            //[_gcSingleton reportAchievementIdentifier:@"sleepWithFishes" percentComplete:100.0];
+            
+            GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"sleepWithFishes"];
+            achievement.percentComplete = 100.0;
+            achievement.showsCompletionBanner = YES;
+            
+            NSArray *achievementArray = @[achievement];
+            
+            [_gcSingleton reportAchievements:achievementArray];
+        }
+        
         [[self scene] runAction:_waterSound];
         _lives--;
         _livesLabel.text = [NSString stringWithFormat:@"Lives %d", _lives];

@@ -178,6 +178,31 @@
     }];
 }
 
+- (void)reportAchievements:(NSArray*)achievements
+{
+    [GKAchievement reportAchievements: achievements withCompletionHandler:^(NSError *error)
+     {
+         if (error != nil)
+         {
+             NSLog(@"Error in reporting achievements: %@", error);
+         }
+         [self loadAchievements];
+     }];
+}
+
+- (void)resetAchievements
+{
+    // Clear all locally saved achievement objects.
+    self.achievementsDictionary = [[NSMutableDictionary alloc] init];
+    // Clear all progress saved on Game Center.
+    [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error)
+     {
+         if (error != nil)
+         {
+             // handle the error.
+         }
+    }];
+}
 
 
 

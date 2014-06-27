@@ -17,6 +17,7 @@
     // Override point for customization after application launch.
     
     [[GCSingleton sharedContext] authenticateLocalUser];
+    [[GCSingleton sharedContext] resetAchievements];
     
     return YES;
 }

@@ -22,5 +22,6 @@
 //- (void)reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent;
 - (void)reportAchievements:(NSArray*)achievements;
 - (void)resetAchievements;
+- (GKAchievement*)getAchievementForIdentifier: (NSString*) identifier;
 
 @end

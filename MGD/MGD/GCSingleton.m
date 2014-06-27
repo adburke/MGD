@@ -127,6 +127,7 @@
      {
          if (error == nil)
          {
+             [self.achievementsDictionary removeAllObjects];
              for (GKAchievement* achievement in achievements)
                  [self.achievementsDictionary setObject: achievement forKey: achievement.identifier];
          }
@@ -186,7 +187,6 @@
          {
              NSLog(@"Error in reporting achievements: %@", error);
          }
-         [self loadAchievements];
      }];
 }
 

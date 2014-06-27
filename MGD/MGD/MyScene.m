@@ -439,10 +439,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
             }
             
             if (_lives == 5) {
-                if (![_gcSingleton.achievementsDictionary objectForKey:@"flawlessFinish"])
+                if (![_gcSingleton.achievementsDictionary objectForKey:@"flawlessFinish"] && ![_gcSingleton.achievementsDictionary objectForKey:@"flawlessMaster"] )
                 {
-                    //[_gcSingleton reportAchievementIdentifier:@"flawlessFinish" percentComplete:100.0];
-                    //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:33.0];
                     
                     GKAchievement *achievement1 = [[GKAchievement alloc] initWithIdentifier: @"flawlessFinish"];
                     GKAchievement *achievement2 = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
@@ -454,33 +452,33 @@ typedef NS_ENUM(NSInteger, DeviceType)
                     NSArray *achievementArray = @[achievement1,achievement2];
                     
                     [_gcSingleton reportAchievements:achievementArray];
+                    for (GKAchievement* ach in achievementArray) {
+                        [_gcSingleton.achievementsDictionary setObject:ach forKey:ach.identifier];
+                    }
+                    
                     
                 }
                 else
                 {
-                    GKAchievement *flawlessMaster = [_gcSingleton.achievementsDictionary objectForKey:@"flawlessMaster"];
+                    GKAchievement *flawlessMaster = [_gcSingleton getAchievementForIdentifier:@"flawlessMaster"];
                     
                     if (flawlessMaster.percentComplete < 40.0)
                     {
-                        //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:66];
                         
-                        GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
-                        achievement.percentComplete = 66.0;
+                        flawlessMaster.percentComplete = 66.0;
                         
-                        NSArray *achievementArray = @[achievement];
+                        NSArray *achievementArray = @[flawlessMaster];
                         
                         [_gcSingleton reportAchievements:achievementArray];
                     }
 
                     else if (flawlessMaster.percentComplete > 40 && flawlessMaster.percentComplete < 70)
                     {
-                        //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:100.0];
                         
-                        GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
-                        achievement.percentComplete = 100.0;
-                        achievement.showsCompletionBanner = YES;
+                        flawlessMaster.percentComplete = 100.0;
+                        flawlessMaster.showsCompletionBanner = YES;
                         
-                        NSArray *achievementArray = @[achievement];
+                        NSArray *achievementArray = @[flawlessMaster];
                         
                         [_gcSingleton reportAchievements:achievementArray];
                     }

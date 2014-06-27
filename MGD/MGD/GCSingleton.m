@@ -13,18 +13,18 @@
 
 + (GCSingleton *)sharedContext
 {
-    static GCSingleton *_sharedInstance = nil;
+    static GCSingleton *sharedContext = nil;
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        _sharedInstance = [[GCSingleton alloc] init];
+        sharedContext = [[GCSingleton alloc] init];
     });
     
-    return _sharedInstance;
+    return sharedContext;
 }
 
 - (id)init {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         // Check for GC availablility
         _gameCenterAvailable = [self isGameCenterAvailable];
         if (_gameCenterAvailable)

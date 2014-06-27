@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     if (self = [super initWithSize:size])
     {
         
-        _gcSingleton = [[GCSingleton sharedContext] init];
+        _gcSingleton = [GCSingleton sharedContext];
         
         _lives = 5;
         _gameOver = NO;
@@ -459,7 +459,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
                 else
                 {
                     GKAchievement *flawlessMaster = [_gcSingleton.achievementsDictionary objectForKey:@"flawlessMaster"];
-                    if (flawlessMaster.percentComplete < 40.0) {
+                    
+                    if (flawlessMaster.percentComplete < 40.0)
+                    {
                         //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:66];
                         
                         GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier: @"flawlessMaster"];
@@ -469,6 +471,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
                         
                         [_gcSingleton reportAchievements:achievementArray];
                     }
+
                     else if (flawlessMaster.percentComplete > 40 && flawlessMaster.percentComplete < 70)
                     {
                         //[_gcSingleton reportAchievementIdentifier:@"flawlessMaster" percentComplete:100.0];
@@ -482,7 +485,6 @@ typedef NS_ENUM(NSInteger, DeviceType)
                         [_gcSingleton reportAchievements:achievementArray];
                     }
                 }
-                
                 
             }
             

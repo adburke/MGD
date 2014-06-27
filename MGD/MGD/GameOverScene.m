@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, DeviceType)
 {
     NSString *_sceneAtlas;
     
+    BOOL _showingBoard;
+    
     SKSpriteNode *_background;
     SKSpriteNode *_menuBtn;
     SKSpriteNode *_playBtn;
@@ -78,7 +80,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
         if (won) {
             _background = [SKSpriteNode spriteNodeWithTexture:[[SKTextureAtlas atlasNamed:_sceneAtlas] textureNamed:@"Scene/win"]];
-            
+            _showingBoard = TRUE;
             SKAction *wait = [SKAction waitForDuration:1];
             SKAction *performSelector = [SKAction performSelector:@selector(launchLeaderBoard) onTarget:self];
             SKAction *sequence = [SKAction sequence:@[wait, performSelector]];
@@ -140,6 +142,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 - (void)playAction
 {
+    if (_showingBoard) {
+        return;
+    }
     SKAction *fadeOut = [SKAction fadeAlphaTo:0.4 duration:0.1];
     SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.1];
     SKAction *performSelector = [SKAction performSelector:@selector(launchGame) onTarget:self];
@@ -220,6 +225,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
 
 -(void) gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
 {
+    _showingBoard = FALSE;
     [[[[[UIApplication sharedApplication] delegate] window] rootViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 

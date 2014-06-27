@@ -133,21 +133,21 @@
      }];
 }
 
-- (void)reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent
-{
-    GKAchievement *achievement = [self getAchievementForIdentifier:identifier];
-    if (achievement)
-    {
-        achievement.percentComplete = percent;
-        [achievement reportAchievementWithCompletionHandler:^(NSError *error)
-         {
-             if (error != nil)
-             {
-                 // Log the error.
-             }
-         }];
-    }
-}
+//- (void)reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent
+//{
+//    GKAchievement *achievement = [self getAchievementForIdentifier:identifier];
+//    if (achievement)
+//    {
+//        achievement.percentComplete = percent;
+//        [achievement reportAchievementWithCompletionHandler:^(NSError *error)
+//         {
+//             if (error != nil)
+//             {
+//                 // Log the error.
+//             }
+//         }];
+//    }
+//}
 
 - (GKAchievement*)getAchievementForIdentifier: (NSString*) identifier
 {

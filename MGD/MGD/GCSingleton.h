@@ -19,7 +19,7 @@
 
 + (GCSingleton *)sharedContext;
 - (void)authenticateLocalUser;
-- (void)reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent;
+//- (void)reportAchievementIdentifier: (NSString*) identifier percentComplete: (float) percent;
 - (void)reportAchievements:(NSArray*)achievements;
 - (void)resetAchievements;
 

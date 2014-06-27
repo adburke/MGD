@@ -319,7 +319,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
         [self runAction:[SKAction repeatActionForever:
                          [SKAction sequence:@[
                                               [SKAction performSelector:@selector(spawnSnail) onTarget:self],
-                                              [SKAction waitForDuration:0.5]]]]];
+                                              [SKAction waitForDuration:2.0]]]]];
         
         // Spawn Lily pads
         [self runAction:[SKAction repeatActionForever:
@@ -523,7 +523,7 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
 }
 
-- (void) reportScore: (int64_t) score
+- (void)reportScore: (int64_t) score
 {
     GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: SCOREBOARD_ID];
     scoreReporter.value = score;
@@ -683,9 +683,9 @@ typedef NS_ENUM(NSInteger, DeviceType)
     
     [self addChild:snail];
     
-    SKAction *actionMove = [SKAction moveTo:CGPointMake(-snail.size.width/2,snail.position.y) duration:3.0];
+    SKAction *actionMove = [SKAction moveTo:CGPointMake(-snail.size.width/2,snail.position.y) duration:5.0];
     SKAction *actionRemove = [SKAction removeFromParent];
-    SKAction *repeatAnimation = [SKAction repeatAction:_snailAnimation count:5.0];
+    SKAction *repeatAnimation = [SKAction repeatAction:_snailAnimation count:10.0];
     SKAction *group = [SKAction group:@[actionMove, repeatAnimation]];
     [snail runAction:[SKAction sequence:@[group, actionRemove]]];
 }
